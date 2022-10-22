@@ -6,9 +6,18 @@
     "start": "next start"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.2",
+    "@reduxjs/toolkit": "^1.8.5",
+    "axios": "^0.27.2",
+    "firebase": "^9.9.3",
     "next": "latest",
+    "rc-progress": "^3.4.0",
     "react": "18.1.0",
-    "react-dom": "18.1.0"
+    "react-dom": "18.1.0",
+    "react-image-file-resizer": "^0.4.8",
+    "react-player": "^2.11.0",
+    "react-redux": "^8.0.2",
+    "redux": "^4.2.0"
   },
   "devDependencies": {
     "@types/node": "17.0.35",
