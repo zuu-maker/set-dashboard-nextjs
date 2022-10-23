@@ -6,12 +6,12 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBFFBaDSI42FOjXuU06s1NgHWztpUv8gLQ",
-  authDomain: "set-edu-83e30.firebaseapp.com",
-  projectId: "set-edu-83e30",
-  storageBucket: "set-edu-83e30.appspot.com",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: "154282519195",
-  appId: "1:154282519195:web:ff9057b6cacaa93c29b43e",
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase

@@ -71,6 +71,7 @@ const CreateCourse = () => {
         })
         .catch((err) => {
           console.log(err);
+          alert("upload failed");
           setValues({ ...values, loading: false });
         });
     });
@@ -87,6 +88,7 @@ const CreateCourse = () => {
       })
       .catch((error) => {
         setValues({ ...values, uploading: false });
+        alert("failed to delete");
         console.log(error);
       });
   };

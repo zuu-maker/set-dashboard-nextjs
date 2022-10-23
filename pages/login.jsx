@@ -3,7 +3,7 @@ import { auth } from "../firebase";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../features/userSlice";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getIdToken, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useRouter } from "next/router";
 
 const Login = () => {
@@ -43,9 +43,9 @@ const Login = () => {
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
-        userCredentials.user.getIdTokenResult().then((idTokenResult) => {
-          if (idTokenResult.token.length > 0 && userCredentials.user.email) {
-            getCurrentUser(idTokenResult.token, userCredentials.user.email)
+        userCredentials.user.getIdToken().then((idToken) => {
+          if (idToken.length > 0 && userCredentials.user.email) {
+            getCurrentUser(idToken, userCredentials.user.email)
               .then((res) => {
                 if (res.data.role !== "Student") {
                   dispatch(
@@ -53,7 +53,7 @@ const Login = () => {
                       id: res.data._id,
                       name: res.data.name,
                       email: res.data.email,
-                      token: idTokenResult.token,
+                      token: idToken,
                       role: res.data.role,
                       isVerified: userCredentials.user.emailVerified,
                     })
