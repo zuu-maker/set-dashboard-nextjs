@@ -46,7 +46,7 @@ const CategoryEdit = () => {
   return (
     <div>
       <Head>
-        <title>Create Next App</title>
+        <title>SET - Update Category</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -57,7 +57,7 @@ const CategoryEdit = () => {
             <Sidebar />
           </div>
           <div className="basis-5/6 p-8">
-            <h2 className="text-2xlfont-semibold mb-3">Create Category</h2>
+            <h2 className="text-2xlfont-semibold mb-3">Update Category</h2>
             <div className="mb-6">
               <input
                 value={name}

@@ -1,4 +1,5 @@
 import React from "react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import AdminNav from "../../components/AdminNav";
 import Sidebar from "../../components/Sidebar";
@@ -12,12 +13,18 @@ import {
   studentCountFromDb,
   unPublishFromDb,
 } from "../../lib/course";
+import Loader from "../../components/util/Loader";
+import { useSelector } from "react-redux";
+
+import { TEACHER, ADMIN } from "../../features/userSlice";
 
 const CourseView = () => {
   const router = useRouter();
   const { slug } = router.query;
+  const { user } = useSelector((state) => state);
   //for lessons
   const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [course, setCourse] = useState(null);
   const [students, setStudents] = useState(null);
@@ -28,6 +35,7 @@ const CourseView = () => {
       setCourse(_course);
       studentCount(_course._id);
     }
+    setLoading(false);
   };
 
   const studentCount = async (id) => {
@@ -76,18 +84,26 @@ const CourseView = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     loadCourse();
   }, [slug]);
 
   return (
     <div>
+      <Head>
+        <title>SET - Course</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <AdminNav />
       <div className="flex flex-row">
         <div className="basis-1/6">
           <Sidebar />
         </div>
-        <div className="basis-5/6">
-          <div className="p-8 w-full">
+
+        <div className="basis-5/6 p-8 -ml-10">
+          {loading ? (
+            <Loader />
+          ) : (
             <div>
               <div className="flex items-center justify-between mb-2">
                 <div className="flex gap-4">
@@ -117,23 +133,25 @@ const CourseView = () => {
                       >
                         Edit
                       </p>
-                      <div>
-                        {course && course.published ? (
-                          <button
-                            onClick={() => unPublish(course._id)}
-                            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 rounded-md text-sm px-5 py-2.5 text-center mr-2 mb-2"
-                          >
-                            Unpublish
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => publish(course._id)}
-                            className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-                          >
-                            Publish
-                          </button>
-                        )}
-                      </div>
+                      {user && user.role === ADMIN && (
+                        <div>
+                          {course && course.published ? (
+                            <button
+                              onClick={() => unPublish(course._id)}
+                              className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 rounded-md text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                            >
+                              Unpublish
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => publish(course._id)}
+                              className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                            >
+                              Publish
+                            </button>
+                          )}
+                        </div>
+                      )}
                     </div>
                     <div>
                       <p className="font-semibold text-md text-cyan-700">
@@ -147,14 +165,16 @@ const CourseView = () => {
                 {/* <ReactMarkdown source={course.description} /> */}
                 <p className="text-xs">{course?.description}</p>
               </div>
-              <div className="flex w-full justify-center mb-2">
-                <button
-                  className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 w-2/3 font-medium rounded-lg text-md px-5 py-3 text-center mr-2 mb-2"
-                  onClick={() => setVisible(!visible)}
-                >
-                  Add Lesson
-                </button>
-              </div>
+              {user && user.role === TEACHER && (
+                <div className="flex w-full justify-center mb-2">
+                  <button
+                    className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 w-2/3 font-medium rounded-lg text-md px-5 py-3 text-center mr-2 mb-2"
+                    onClick={() => setVisible(!visible)}
+                  >
+                    Add Lesson
+                  </button>
+                </div>
+              )}
               <hr />
               <div>
                 <h4 className="text-xl mb-2 mt-2 font-semibold text-cyan-400">
@@ -169,6 +189,8 @@ const CourseView = () => {
                 </ul>
               </div>
             </div>
+          )}
+          <div className="p-8 w-full">
             <Modal
               setCourse={setCourse}
               visible={visible}

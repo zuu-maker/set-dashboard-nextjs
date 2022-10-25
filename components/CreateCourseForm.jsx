@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { readCategories } from "../lib/category";
+import { readTeachers } from "../lib/teacher";
 
 const CreateCourseForm = ({
   values,
@@ -14,14 +15,21 @@ const CreateCourseForm = ({
   editPage = false,
 }) => {
   const [categories, setCategories] = useState([]);
+  const [teachers, setTeachers] = useState([]);
 
   const loadCategories = async () => {
     const _categories = await readCategories();
     setCategories(_categories);
   };
 
+  const loadTeachers = async () => {
+    const _teachers = await readTeachers();
+    setTeachers(_teachers);
+  };
+
   useEffect(() => {
     loadCategories();
+    loadTeachers();
   }, []);
 
   return (
@@ -87,11 +95,26 @@ const CreateCourseForm = ({
                 value={values.category}
                 onChange={handleChange}
                 name="category"
-                id="countries"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               >
                 <option defaultValue="No">Select Category</option>
                 {categories.map((c) => (
+                  <option key={c._id} value={c._id}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <select
+                value={values.teacher}
+                onChange={handleChange}
+                name="teacher"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              >
+                <option defaultValue="No">Assign Teacher</option>
+                {teachers.map((c) => (
                   <option key={c._id} value={c._id}>
                     {c.name}
                   </option>

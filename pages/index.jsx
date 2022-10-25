@@ -29,7 +29,7 @@ const Home = () => {
         <AdminNav />
         <div className="flex flex-row">
           <div className="basis-1/6 ">
-            <Sidebar />
+            <Sidebar />{" "}
           </div>
           <div className="basis-5/6 -ml-10 p-8">
             <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

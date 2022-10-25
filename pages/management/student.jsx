@@ -18,7 +18,7 @@ const StudentView = () => {
   return (
     <div className="">
       <Head>
-        <title>Create Next App</title>
+        <title>SET - Student Manager</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

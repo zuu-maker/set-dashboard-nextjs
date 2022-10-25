@@ -5,6 +5,7 @@ import Sidebar from "../../components/Sidebar";
 import AdminCategory from "../../components/AdminCategory";
 
 import { createCategory, readCategories } from "../../lib/category";
+import Loader from "../../components/util/Loader";
 
 const CreateCategory = () => {
   const [name, setName] = useState("");
@@ -14,31 +15,30 @@ const CreateCategory = () => {
   const loadCategories = async () => {
     const _categories = await readCategories();
     setCategories(_categories);
+    setLoading(false);
   };
 
   useEffect(() => {
+    setLoading(true);
     loadCategories();
   }, []);
 
   const handleSubmit = () => {
-    setLoading(true);
     createCategory(name)
       .then((res) => {
         loadCategories();
-        setLoading(false);
         console.log(res.data);
         setName("");
       })
       .catch((err) => {
         console.log(err);
-        setLoading(false);
       });
   };
 
   return (
     <div>
       <Head>
-        <title>Create Next App</title>
+        <title>SET - Create Category</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -69,16 +69,20 @@ const CreateCategory = () => {
             </div>
             <div>
               <h6 className="mb-4 text-lg font-semibold">All Categories</h6>
-              <ul className="w-3/5 text-sm font-medium text-gray-900 bg-white rounded-sm border border-gray-200">
-                {categories.map((c, i) => (
-                  <AdminCategory
-                    key={i}
-                    loadCategories={loadCategories}
-                    setIsLoading={setLoading}
-                    category={c}
-                  />
-                ))}
-              </ul>
+              {loading ? (
+                <Loader />
+              ) : (
+                <ul className="w-3/5 text-sm font-medium text-gray-900 bg-white rounded-sm border border-gray-200">
+                  {categories.map((c, i) => (
+                    <AdminCategory
+                      key={i}
+                      loadCategories={loadCategories}
+                      setIsLoading={setLoading}
+                      category={c}
+                    />
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
         </div>

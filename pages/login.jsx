@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import Head from "next/head";
 import { auth } from "../firebase";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../features/userSlice";
-import { getIdToken, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useRouter } from "next/router";
 
 const Login = () => {
@@ -22,7 +23,7 @@ const Login = () => {
   const getCurrentUser = async (token, _email) => {
     console.log(_email);
     return await axios.post(
-      "http://localhost:3010/api/current-user",
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/current-user`,
       {
         email: _email,
       },
@@ -45,6 +46,7 @@ const Login = () => {
       .then((userCredentials) => {
         userCredentials.user.getIdToken().then((idToken) => {
           if (idToken.length > 0 && userCredentials.user.email) {
+            console.log(userCredentials.user);
             getCurrentUser(idToken, userCredentials.user.email)
               .then((res) => {
                 if (res.data.role !== "Student") {
@@ -58,7 +60,11 @@ const Login = () => {
                       isVerified: userCredentials.user.emailVerified,
                     })
                   );
-                  router.push("/");
+                  if (res.data.role === "Admin") {
+                    router.push("/");
+                  } else {
+                    router.push(`/courses/${res.data._id}`);
+                  }
                 } else {
                   signOut(auth);
                   alert("Not Authorised");
@@ -81,6 +87,10 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">
+      <Head>
+        <title>SET - Login</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div className="flex flex-col w-3/6">
         <div className="p-5 bg-gray-300">
           <h1 className="text-2xl font-bold text-sky-400">Login</h1>

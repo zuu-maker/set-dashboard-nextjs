@@ -27,6 +27,7 @@ const initialValues = {
   description: "",
   price: "",
   duration: "",
+  teacher: "",
   uploading: false,
   loading: false,
 };
@@ -39,7 +40,6 @@ const CreateCourse = () => {
   const [values, setValues] = useState(initialValues);
 
   const handleSubmit = async () => {
-    console.log(image, values);
     createCourse(values, image)
       .then((res) => {
         setValues(initialValues);
@@ -95,12 +95,13 @@ const CreateCourse = () => {
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
+    console.log(values);
   };
 
   return (
     <div>
       <Head>
-        <title>Create Next App</title>
+        <title>SET - Create Course</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

@@ -1,4 +1,5 @@
 import React from "react";
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import AdminNav from "../../../components/AdminNav";
 import Sidebar from "../../../components/Sidebar";
@@ -10,6 +11,9 @@ import LessonListUpdate from "../../../components/LessonListUpdate";
 import { removeLessonFromDb } from "../../../lib/lesson";
 import UpdateModal from "../../../components/UpdateModal";
 import axios from "axios";
+import { useSelector } from "react-redux";
+
+import { ADMIN } from "../../../features/userSlice";
 
 const initalState = {
   _id: "",
@@ -22,6 +26,7 @@ const initalState = {
 
 const EditCourse = () => {
   const router = useRouter();
+  const { user } = useSelector((state) => state);
   const { slug } = router.query;
   const [preview, setPreview] = useState("");
   const [buttonText, setButtonText] = useState("Upload Image");
@@ -138,25 +143,34 @@ const EditCourse = () => {
 
   return (
     <div>
+      <Head>
+        <title>SET - Update Course</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <AdminNav />
       <div className="flex flex-row">
         <div className="basis-1/6">
           <Sidebar />
         </div>
         <div className="basis-5/6 p-8">
-          <h2 className="text-2xl mb-2 font-semibold">Edit Course</h2>
-          <CreateCourseForm
-            handleImage={handleImage}
-            handleChange={handleChange}
-            buttonText={buttonText}
-            setButtonText={setButtonText}
-            preview={preview}
-            setPreview={setPreview}
-            image={image}
-            values={values}
-            editPage={true}
-            handleSubmit={handleSubmit}
-          />
+          <h2 className="text-2xl mb-2 font-semibold">
+            {user && user.role === ADMIN ? "Edit Course" : "Edit Lessons"}
+          </h2>
+          {user && user.role === ADMIN && (
+            <CreateCourseForm
+              handleImage={handleImage}
+              handleChange={handleChange}
+              buttonText={buttonText}
+              setButtonText={setButtonText}
+              preview={preview}
+              setPreview={setPreview}
+              image={image}
+              values={values}
+              editPage={true}
+              handleSubmit={handleSubmit}
+            />
+          )}
           <hr className="mt-8" />
           <div>
             <h4 className="text-xl mb-2 mt-2 font-semibold text-cyan-400">

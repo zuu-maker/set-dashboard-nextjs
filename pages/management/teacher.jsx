@@ -10,7 +10,7 @@ const TeacherView = () => {
   return (
     <div className="">
       <Head>
-        <title>Create Next App</title>
+        <title>SET - Teacher Manager</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

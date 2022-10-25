@@ -21,7 +21,8 @@ const CourseStats = () => {
   return (
     <div>
       <Head>
-        <title>Create Next App</title>
+        <title>SET - Course Stats</title>
+
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

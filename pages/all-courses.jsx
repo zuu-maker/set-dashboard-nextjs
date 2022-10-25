@@ -6,26 +6,30 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import AdminCourse from "../components/AdminCourse";
 import { readCourses } from "../lib/course";
+import Loader from "../components/util/Loader";
 
 const AllCourses = () => {
   const user = useSelector((state) => state.user);
   const [myCourses, setMyCourses] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const loadMyCourses = async () => {
     if (user && user.id) {
       const _courses = await readCourses(user.id);
       setMyCourses(_courses);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
+    setLoading(true);
     loadMyCourses();
   }, []);
 
   return (
     <div>
       <Head>
-        <title>SET - my courses</title>
+        <title>SET - All Courses</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -39,10 +43,16 @@ const AllCourses = () => {
             <div className="p-8">
               <h2 className="text-2xl font-semibold">All Courses</h2>
 
-              <ul className="divide-y mt-4 divide-gray-200 dark:divide-gray-700">
-                {myCourses &&
-                  myCourses.map((c) => <AdminCourse key={c._id} course={c} />)}
-              </ul>
+              {loading ? (
+                <Loader />
+              ) : (
+                <ul className="divide-y mt-4 divide-gray-200 dark:divide-gray-700">
+                  {myCourses &&
+                    myCourses.map((c) => (
+                      <AdminCourse key={c._id} course={c} />
+                    ))}
+                </ul>
+              )}
             </div>
           </div>
         </div>
