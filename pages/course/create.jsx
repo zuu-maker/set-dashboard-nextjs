@@ -27,6 +27,8 @@ const initialValues = {
   description: "",
   price: "",
   duration: "",
+  start: "",
+  end: "",
   teacher: "",
   uploading: false,
   loading: false,
@@ -40,6 +42,13 @@ const CreateCourse = () => {
   const [values, setValues] = useState(initialValues);
 
   const handleSubmit = async () => {
+    console.log(values, "image ==>", image);
+
+    if (!image?.data?.Location) {
+      alert("please uplaod an image!!");
+      return;
+    }
+
     createCourse(values, image)
       .then((res) => {
         setValues(initialValues);
@@ -95,7 +104,6 @@ const CreateCourse = () => {
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
-    console.log(values);
   };
 
   return (
@@ -106,7 +114,6 @@ const CreateCourse = () => {
       </Head>
 
       <div>
-        <AdminNav />
         <div className="flex flex-row">
           <div className="basis-1/6">
             <Sidebar />

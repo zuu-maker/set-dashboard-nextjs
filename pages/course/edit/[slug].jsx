@@ -43,6 +43,14 @@ const EditCourse = () => {
     Bucket: "",
   });
 
+  const [pdf, setPdf] = useState({
+    ETag: "",
+    Location: "",
+    Key: "",
+    Key: "",
+    Bucket: "",
+  });
+
   const [values, setValues] = useState();
 
   const loadCourse = async () => {
@@ -148,7 +156,6 @@ const EditCourse = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <AdminNav />
       <div className="flex flex-row">
         <div className="basis-1/6">
           <Sidebar />

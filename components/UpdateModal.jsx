@@ -18,6 +18,7 @@ const UpdateModal = ({
 }) => {
   const cancelButtonRef = useRef(null);
   const [buttonText, setButtonText] = useState("Upload Video");
+  const [buttonTextPdf, setButtonTextPdf] = useState("Upload pdf");
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
 
@@ -51,6 +52,51 @@ const UpdateModal = ({
       });
   };
 
+  const handlePdf = async (e) => {
+    setButtonTextPdf("Uploading...");
+    if (current.pdf && current.pdf.Location) {
+      try {
+        const res = await axios.post(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/remove-pdf`,
+          {
+            pdf: current.pdf,
+          }
+        );
+        console.log("Deleted Video Res ==>", res);
+      } catch (error) {
+        alert("Error deleting Pdf");
+        console.log(error);
+        setButtonTextPdf("Try Again Later");
+        return;
+      }
+    }
+
+    const file = e.target.files[0];
+    console.log(file);
+    setUploading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("pdf", file);
+      console.log(formData);
+
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/upload-pdf`,
+        formData
+      );
+
+      console.log(data);
+      setCurrent((prev) => ({ ...prev, pdf: data }));
+      setValues({ ...values, pdf: data });
+      setButtonTextPdf(file.name);
+    } catch (error) {
+      setButtonTextPdf("Upload Another Pdf");
+      console.log(error);
+      alert("failed to upload video");
+    }
+    setUploading(false);
+  };
+
   const handleVideo = async (e) => {
     if (current.video && current.video.Location) {
       const res = await axios.post(
@@ -61,7 +107,7 @@ const UpdateModal = ({
       );
 
       if (res.statusText !== "OK") {
-        alert("Error handling video");
+        alert("Error deleting Video");
         console.log(res);
         return;
       }
@@ -144,7 +190,9 @@ const UpdateModal = ({
                     handleOnChange={handleOnChange}
                     handleVideo={handleVideo}
                     buttonText={buttonText}
+                    buttonTextPdf={buttonTextPdf}
                     progress={progress}
+                    handlePdf={handlePdf}
                   />
                 </div>
                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const AdminCourse = ({ course }) => {
   return (
-    <li className="pb-3 sm:pb-4 w-full">
+    <li className="pb-2 pt-2 sm:pb-4 w-full">
       <Link href={`/course/${course.slug}`}>
         <div className="flex w-full items-center justify-between cursor-pointer">
           <div className="flex items-center space-x-4">
@@ -15,16 +15,16 @@ const AdminCourse = ({ course }) => {
               />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-md font-medium text-gray-900 truncate dark:text-white">
+              <p className="text-md font-medium text-gray-900 truncate ">
                 {course.name}
               </p>
-              <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+              <p className="text-sm text-gray-500 truncate ">
                 {course.lessons.length} lesson(s)
               </p>
             </div>
           </div>
 
-          <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+          <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
             {course.price.toLocaleString("en-US", {
               style: "currency",
               currency: "ZMK",

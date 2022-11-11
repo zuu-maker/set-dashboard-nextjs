@@ -1,35 +1,60 @@
 import React from "react";
 import Bin from "../util/Bin";
+import axios from "axios";
 
-const TableElementStudent = () => {
+const TableElementStudent = ({ student }) => {
+  const deleteStudent = async () => {
+    let answer = window.confirm(
+      "Are you sure you want to permanetly delete " + student.name + "?"
+    );
+    if (answer) {
+      if (student._id.length > 0) {
+        const { data } = await axios.delete(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/delete-user/${student._id}`
+        );
+        if (data.ok) {
+          alert("delete");
+          return;
+        }
+        alert("failed to delete");
+      }
+    }
+  };
+
   return (
     <tr className="border-b border-gray-200 hover:bg-gray-100">
       <td className="py-3 px-6 text-left whitespace-nowrap">
         <div className="flex items-center">
           <div className="mr-2"></div>
-          <span className="text-lg font-semibold">Ben Chalwe</span>
+          <span className="text-lg font-semibold">{student.name}</span>
         </div>
       </td>
       <td className="py-3 px-6">
         <div className="flex items-left">
-          <span className="text-lg font-semibold">user@gmail.com</span>
+          <span className="text-lg font-semibold">{student.email}</span>
         </div>
       </td>
       <td className="py-3 px-6 text-left">
-        <span className="text-lg font-semibold">4 Classe(s)</span>
+        <span className="text-lg font-semibold">
+          {student.courses.length} Classe(s)
+        </span>
       </td>
       <td className="py-3 px-6 text-left">
-        <span className="text-lg font-semibold">2002-01-22</span>
+        {student.date > 0 ? (
+          <span className="text-lg font-semibold">{student.date}</span>
+        ) : (
+          <span className="text-lg font-semibold">Nan</span>
+        )}
       </td>
       <td className="py-3 px-6 text-left">
-        <span className="text-lg font-semibold">0977886512</span>
+        <span className="text-lg font-semibold">{student.phone}</span>
       </td>
       <td className="py-3 px-6 text-left">
-        <span className="text-lg font-semibold">Kasama</span>
+        <span className="text-lg font-semibold">{student.city}</span>
       </td>
       <td className="py-3 px-6 text-left">
         <div
-          onClick={() => console.log("delete")}
+          onClick={deleteStudent}
           className="transform hover:text-red-600 cursor-pointer hover:scale-105 mt-2"
         >
           <Bin />

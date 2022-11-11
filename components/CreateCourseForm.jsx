@@ -91,6 +91,42 @@ const CreateCourseForm = ({
             </div>
 
             <div>
+              <label
+                htmlFor="duration"
+                className="block  text-sm font-medium text-gray-900"
+              >
+                Start Date
+              </label>
+              <input
+                name="start"
+                id="start"
+                value={values.start.split("T")[0]}
+                onChange={handleChange}
+                type="date"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="duration"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="duration"
+                className="block  text-sm font-medium text-gray-900"
+              >
+                End Date
+              </label>
+              <input
+                name="end"
+                id="end"
+                value={values.end.split("T")[0]}
+                onChange={handleChange}
+                type="date"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="duration"
+              />
+            </div>
+
+            <div>
               <select
                 value={values.category}
                 onChange={handleChange}

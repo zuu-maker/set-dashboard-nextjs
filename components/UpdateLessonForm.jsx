@@ -8,9 +8,11 @@ const UpdateLessonForm = ({
   uploading,
   handleVideo,
   buttonText,
+  buttonTextPdf,
   progress,
+  handlePdf,
 }) => {
-  const { title, content } = current;
+  const { title, content, pdf } = current;
   return (
     <div className=" text-sm text-gray-500">
       <form className="">
@@ -56,6 +58,28 @@ const UpdateLessonForm = ({
           {progress > 0 && (
             <Line percent={progress} strokeWidth={4} strokeColor="#0000FF" />
           )}
+        </div>
+        <div className="flex px-3 justify-between items-center">
+          <a
+            className="font-md flex-grow text-lg text-cyan-600 dark:text-cyan-500 hover:underline"
+            target="_blank"
+            href={pdf.Location}
+            rel="noopener noreferrer"
+          >
+            link to pdf
+          </a>
+          <label className="text-white mt-2 flex cursor-pointer justify-center items-center  bg-gradient-to-r f from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium text-sm px-5 py-2.5 text-center">
+            {buttonTextPdf}
+            <input
+              hidden
+              type="file"
+              onChange={handlePdf}
+              accept="application/pdf"
+            />
+          </label>
+          {/* <button onClick={handlePdf} className="text-white  flex cursor-pointer justify-center items-center  bg-gradient-to-r  from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium text-sm px-5 py-2.5 text-center">
+            {buttonTextPdf}
+          </button> */}
         </div>
       </form>
     </div>

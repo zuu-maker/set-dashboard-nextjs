@@ -9,6 +9,7 @@ const items = [1, 1, 1, 1, 1, 1];
 
 const Table = ({
   thead,
+  data,
   isStudent = false,
   isTeacher = false,
   isStats = false,
@@ -20,10 +21,21 @@ const Table = ({
         <table className=" w-full table-auto">
           <TableHead thead={thead} />
           <tbody className="text-gray-600 text-sm font-light">
-            {isTeacher && items.map((el, i) => <TableElementTeacher key={i} />)}
-            {isStudent && items.map((el, i) => <TableElementStudent key={i} />)}
-            {isStats && items.map((el, i) => <TableElementStats key={i} />)}
-            {isDash && items.map((el, i) => <DashElement key={i} />)}
+            {isTeacher &&
+              data?.teachers?.map((el, i) => (
+                <TableElementTeacher
+                  teacher={el}
+                  n={data.numOfCourses[i]}
+                  key={i}
+                />
+              ))}
+            {isStudent &&
+              data?.map((el, i) => (
+                <TableElementStudent student={el} key={i} />
+              ))}
+            {isStats &&
+              data?.map((el, i) => <TableElementStats stat={el} key={i} />)}
+            {isDash && data?.map((el, i) => <DashElement el={el} key={i} />)}
           </tbody>
         </table>
       </div>

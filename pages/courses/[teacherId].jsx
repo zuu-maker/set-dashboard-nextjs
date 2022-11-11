@@ -17,7 +17,6 @@ const CourseViewTeacher = () => {
   const loadMyCourses = async () => {
     if (teacherId) {
       const _courses = await readMyCourses(teacherId);
-      console.log("courses ->", _courses);
       setMyCourses(_courses);
     }
     setLoading(false);
@@ -36,7 +35,6 @@ const CourseViewTeacher = () => {
       </Head>
 
       <div>
-        <AdminNav />
         <div className="flex flex-row">
           <div className="basis-1/6">
             <Sidebar />

@@ -45,33 +45,6 @@ const CreateUserForm = ({ values, handleChange, handleSubmit }) => {
               />
             </div>
 
-            <div className="flex items-center gap-2 w-full">
-              <div className="flex-grow">
-                <label
-                  htmlFor="password"
-                  className="block  text-sm font-medium text-gray-900"
-                >
-                  Password
-                </label>
-                <input
-                  name="password"
-                  id="password"
-                  value={values.password}
-                  onChange={handleChange}
-                  type={showPassword ? "text" : "password"}
-                  className="bg-gray-50  border border-gray-30 mb-3 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  placeholder="Password"
-                />
-              </div>
-              <span>
-                {showPassword ? (
-                  <ClosedEye setShowPassword={setShowPassword} />
-                ) : (
-                  <OpenEye setShowPassword={setShowPassword} />
-                )}
-              </span>
-            </div>
-
             <div>
               <label
                 htmlFor="city"

@@ -10,10 +10,8 @@ const Avatar = ({ index = null, src = null }) => {
           alt="Rounded avatar"
         />
       ) : (
-        <div className="inline-flex overflow-hidden relative justify-center items-center w-10 h-10 bg-gray-100 rounded-full dark:bg-gray-600">
-          <span className="font-medium text-gray-600 dark:text-gray-300">
-            {index + 1}
-          </span>
+        <div className="inline-flex overflow-hidden relative justify-center items-center w-10 h-10 bg-gray-100 rounded-full">
+          <span className="font-medium text-gray-600 ">{index + 1}</span>
         </div>
       )}
     </div>

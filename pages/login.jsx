@@ -4,8 +4,13 @@ import { auth } from "../firebase";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../features/userSlice";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import {
+  sendEmailVerification,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -46,7 +51,17 @@ const Login = () => {
       .then((userCredentials) => {
         userCredentials.user.getIdToken().then((idToken) => {
           if (idToken.length > 0 && userCredentials.user.email) {
-            console.log(userCredentials.user);
+            if (!userCredentials.user.emailVerified) {
+              sendEmailVerification(userCredentials.user)
+                .then(() => {
+                  alert(
+                    `Email Verification link has been sent to${userCredentials.user.email}`
+                  );
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            }
             getCurrentUser(idToken, userCredentials.user.email)
               .then((res) => {
                 if (res.data.role !== "Student") {
@@ -86,13 +101,14 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-stone-50">
       <Head>
         <title>SET - Login</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex flex-col w-3/6">
-        <div className="p-5 bg-gray-300">
+        <div className="p-5 bg-gray-300 flex items-center justify-between">
+          <Image src="/logo.png" width={72} height={68} className="mr-3 " />
           <h1 className="text-2xl font-bold text-sky-400">Login</h1>
         </div>
 

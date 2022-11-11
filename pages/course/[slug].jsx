@@ -56,7 +56,7 @@ const CourseView = () => {
     publishToDb(course._id)
       .then((res) => {
         setCourse(res.data);
-        alert("Your Course is now live!!");
+        alert("Course is now live!!");
       })
       .catch((error) => {
         console.log(error);
@@ -94,7 +94,7 @@ const CourseView = () => {
         <title>SET - Course</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <AdminNav />
+
       <div className="flex flex-row">
         <div className="basis-1/6">
           <Sidebar />

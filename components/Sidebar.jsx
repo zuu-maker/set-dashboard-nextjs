@@ -16,16 +16,16 @@ const Sidebar = () => {
   };
 
   return (
-    <div className=" fixed h-screen py-4 pl-3 pr-8 bg-gray-50 ">
+    <div className=" fixed h-screen py-4 pl-3 pr-8 bg-gray-100 ">
       <ul className="space-y-2">
         {user && user.role === ADMIN && (
           <>
-            <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
               <Link href="/">
                 <div className="flex">
                   <svg
                     aria-hidden="true"
-                    className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                    className="w-6 h-6 text-gray-500 transition duration-75  group-hover:text-gray-900 "
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@ const Sidebar = () => {
               </Link>
             </li>
 
-            <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100">
               <Link href="/course-stats">
                 <div className="flex">
                   <svg
@@ -67,7 +67,7 @@ const Sidebar = () => {
         {user && user.role === ADMIN && (
           <>
             <hr />
-            <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
               <Link href="/category/create">
                 <div className="flex">
                   <svg
@@ -88,7 +88,7 @@ const Sidebar = () => {
                 </div>
               </Link>
             </li>
-            <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
               <Link href="/course/create">
                 <div className="flex">
                   <svg
@@ -111,7 +111,7 @@ const Sidebar = () => {
                 </div>
               </Link>
             </li>
-            <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
               <Link href="/all-courses">
                 <div className="flex">
                   <svg
@@ -139,60 +139,65 @@ const Sidebar = () => {
           </>
         )}
 
-        <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-          <Link href={`/courses/${user?.id}`}>
-            <div className="flex">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
-                />
-              </svg>
-              <span className="flex-1 ml-3 whitespace-nowrap">
-                My Course(s)
-              </span>
-            </div>
-          </Link>
-        </li>
+        {user && user.role === "Teacher" && (
+          <>
+            <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 ">
+              <Link href={`/courses/${user?.id}`}>
+                <div className="flex">
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                    <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
+                    />
+                  </svg>
+                  <span className="flex-1 ml-3 whitespace-nowrap">
+                    My Course(s)
+                  </span>
+                </div>
+              </Link>
+            </li>
 
-        <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-          <Link href="/my-students">
-            <div className="flex">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
-                />
-              </svg>
-              <span className="flex-1 ml-3 whitespace-nowrap">My Students</span>
-            </div>
-          </Link>
-        </li>
+            <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
+              <Link href="/my-students">
+                <div className="flex">
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                    <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
+                    />
+                  </svg>
+                  <span className="flex-1 ml-3 whitespace-nowrap">
+                    My Students
+                  </span>
+                </div>
+              </Link>
+            </li>
+          </>
+        )}
 
         {user && user.role === ADMIN && (
           <>
-            <hr />
-            <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
               <Link href="/all-students">
                 <div className="flex">
                   <svg
@@ -217,7 +222,8 @@ const Sidebar = () => {
                 </div>
               </Link>
             </li>
-            <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <hr />
+            <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
               <Link href="/management/teacher">
                 <div className="flex">
                   <svg
@@ -240,7 +246,7 @@ const Sidebar = () => {
                 </div>
               </Link>
             </li>
-            <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
               <Link href="/management/student">
                 <div className="flex">
                   <svg
@@ -263,7 +269,7 @@ const Sidebar = () => {
                 </div>
               </Link>
             </li>
-            {/* <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">
               <Link href="/create-user">
                 <div className="flex">
                   <svg
@@ -281,15 +287,15 @@ const Sidebar = () => {
                     />
                   </svg>
                   <span className="flex-1 ml-3 whitespace-nowrap">
-                    Create User
+                    Add Teacher
                   </span>
                 </div>
               </Link>
-            </li> */}
+            </li>
           </>
         )}
         <hr />
-        <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+        <li className="flex items-center p-2 cursor-pointer text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100">
           <Link href="/reset-password">
             <div className="flex">
               <svg
@@ -320,7 +326,7 @@ const Sidebar = () => {
         </li>
         <li
           onClick={handleSignOut}
-          className="flex items-center cursor-pointer p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+          className="flex items-center cursor-pointer p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100 "
         >
           <svg
             className="w-6 h-6"

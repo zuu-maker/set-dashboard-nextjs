@@ -8,12 +8,14 @@ import { addLesssonToDb } from "../lib/lesson";
 const Modal = ({ visible, setVisible, setCourse, slug, loadCourse }) => {
   const cancelButtonRef = useRef(null);
   const [buttonText, setButtonText] = useState("Upload Video");
+  const [buttonTextPdf, setButtonTextPdf] = useState("Upload Pdf");
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [values, setValues] = useState({
     title: "",
     content: "",
     video: null,
+    pdf: null,
   });
 
   const handleOnChange = (e) => {
@@ -26,9 +28,16 @@ const Modal = ({ visible, setVisible, setCourse, slug, loadCourse }) => {
       .then((data) => {
         console.log(data);
 
-        setValues({ ...values, title: "", content: "", video: null });
+        setValues({
+          ...values,
+          title: "",
+          content: "",
+          video: null,
+          pdf: null,
+        });
         setVisible(false);
         setButtonText("Upload Video");
+        setButtonTextPdf("Upload Pdf");
         setCourse(data);
         alert("Lesson Has Been Added");
         loadCourse();
@@ -72,6 +81,33 @@ const Modal = ({ visible, setVisible, setCourse, slug, loadCourse }) => {
       console.log(error);
       alert("failed to upload video");
     }
+  };
+
+  const handlePdf = async (e) => {
+    setUploading(true);
+    setButtonTextPdf("Uploading...");
+
+    const file = e.target.files[0];
+    console.log(file);
+
+    try {
+      const formData = new FormData();
+      formData.append("pdf", file);
+
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/upload-pdf`,
+        formData
+      );
+
+      console.log(data);
+      setValues({ ...values, pdf: data });
+      setButtonTextPdf(file.name);
+    } catch (error) {
+      setButtonTextPdf("Upload Another Pdf");
+      console.log(error);
+      alert("failed to upload video");
+    }
+    setUploading(false);
   };
 
   const handleRemoveVideo = async (e) => {
@@ -145,6 +181,8 @@ const Modal = ({ visible, setVisible, setCourse, slug, loadCourse }) => {
                     handleVideo={handleVideo}
                     handleRemoveVideo={handleRemoveVideo}
                     buttonText={buttonText}
+                    buttonTextPdf={buttonTextPdf}
+                    handlePdf={handlePdf}
                     progress={progress}
                   />
                 </div>
