@@ -6,6 +6,7 @@ import Sidebar from "../../components/Sidebar";
 import AdminCourse from "../../components/AdminCourse";
 import { readMyCourses } from "../../lib/teacher";
 import Loader from "../../components/util/Loader";
+import TeacherCourse from "../../components/TeacherCourse";
 
 const CourseViewTeacher = () => {
   const router = useRouter();
@@ -35,6 +36,7 @@ const CourseViewTeacher = () => {
       </Head>
 
       <div>
+        <AdminNav />
         <div className="flex flex-row">
           <div className="basis-1/6">
             <Sidebar />
@@ -53,7 +55,7 @@ const CourseViewTeacher = () => {
                     <ul className="divide-y mt-4 divide-gray-200 dark:divide-gray-700">
                       {myCourses.length > 0 &&
                         myCourses.map((c) => (
-                          <AdminCourse key={c._id} course={c} />
+                          <TeacherCourse key={c._id} course={c} />
                         ))}
                     </ul>
                   )}

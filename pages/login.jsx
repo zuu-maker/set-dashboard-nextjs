@@ -64,25 +64,22 @@ const Login = () => {
             }
             getCurrentUser(idToken, userCredentials.user.email)
               .then((res) => {
-                if (res.data.role !== "Student") {
-                  dispatch(
-                    setUser({
-                      id: res.data._id,
-                      name: res.data.name,
-                      email: res.data.email,
-                      token: idToken,
-                      role: res.data.role,
-                      isVerified: userCredentials.user.emailVerified,
-                    })
-                  );
-                  if (res.data.role === "Admin") {
-                    router.push("/");
-                  } else {
-                    router.push(`/courses/${res.data._id}`);
-                  }
+                dispatch(
+                  setUser({
+                    id: res.data._id,
+                    name: res.data.name,
+                    email: res.data.email,
+                    token: idToken,
+                    role: res.data.role,
+                    isVerified: userCredentials.user.emailVerified,
+                  })
+                );
+                if (res.data.role === "Admin") {
+                  router.push("/");
+                } else if (res.data.role === "Student") {
+                  router.push("/study/my-courses");
                 } else {
-                  signOut(auth);
-                  alert("Not Authorised");
+                  router.push(`/courses/${res.data._id}`);
                 }
               })
               .catch((err) => {
@@ -101,13 +98,13 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-stone-50">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-stone-100">
       <Head>
         <title>SET - Login</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex flex-col w-3/6">
-        <div className="p-5 bg-gray-300 flex items-center justify-between">
+      <div className="flex flex-col bg-gray-50 p-20 shadow-lg w-3/6">
+        <div className="p-5 bg-gray-100 flex items-center justify-between">
           <Image src="/logo.png" width={72} height={68} className="mr-3 " />
           <h1 className="text-2xl font-bold text-sky-400">Login</h1>
         </div>

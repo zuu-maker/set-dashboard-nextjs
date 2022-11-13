@@ -35,21 +35,28 @@ const AuthCheck = ({ children }) => {
           if (idTokenResult.token.length > 0) {
             getCurrentUser(idTokenResult.token, _user.email)
               .then((res) => {
-                if (res.data.role === "Student") {
-                  router.push("/login");
-                  signOut(auth);
-                  dispatch(logOutUser());
-                } else {
-                  dispatch(
-                    setUser({
-                      id: res.data._id,
-                      name: res.data.name,
-                      email: res.data.email,
-                      token: idTokenResult.token,
-                      role: res.data.role,
-                    })
-                  );
-                }
+                console.log(res);
+                // router.push("/study/my-courses");
+                dispatch(
+                  setUser({
+                    id: res.data._id,
+                    name: res.data.name,
+                    email: res.data.email,
+                    token: idTokenResult.token,
+                    role: res.data.role,
+                  })
+                );
+                // else {
+                //   dispatch(
+                //     setUser({
+                //       id: res.data._id,
+                //       name: res.data.name,
+                //       email: res.data.email,
+                //       token: idTokenResult.token,
+                //       role: res.data.role,
+                //     })
+                //   );
+                // }
               })
               .catch((err) => {
                 console.log(err);

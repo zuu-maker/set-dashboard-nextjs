@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar";
 import StudentTable from "../components/table/Table";
 import { useEffect, useState } from "react";
 import { readStudents } from "../lib/student";
+import AdminNav from "../components/AdminNav";
 
 const tableHead = [
   "Name",
@@ -34,6 +35,7 @@ const StudentView = () => {
       </Head>
 
       <div>
+        <AdminNav />
         <div className="flex flex-row">
           <div className="basis-1/6">
             <Sidebar />

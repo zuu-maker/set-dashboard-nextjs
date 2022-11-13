@@ -4,12 +4,14 @@ import Sidebar from "../../components/Sidebar";
 import StudentRole from "../../components/table/StudentRole";
 import { useEffect } from "react";
 import { readSubs } from "../../lib/student";
+import AdminNav from "../../components/AdminNav";
 
 const allStudents = () => {
   const [subscriptions, setSubscriptions] = useState([]);
 
   const loadSubs = async () => {
     const _subs = await readSubs();
+    console.log(_subs);
     setSubscriptions(_subs);
   };
 
@@ -24,6 +26,7 @@ const allStudents = () => {
       </Head>
 
       <div>
+        <AdminNav />
         <div className="flex flex-row">
           <div className="basis-1/6">
             <Sidebar />

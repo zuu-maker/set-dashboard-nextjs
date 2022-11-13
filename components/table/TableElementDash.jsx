@@ -1,7 +1,6 @@
 import React from "react";
 
 const TransactionElement = ({ el }) => {
-  console.log("in row --> ", el);
   return (
     <tr className="border-b border-gray-200 hover:bg-gray-100">
       <td className="py-3 px-6 text-left whitespace-nowrap">

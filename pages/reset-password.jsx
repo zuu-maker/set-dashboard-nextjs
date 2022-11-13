@@ -32,6 +32,7 @@ const ResetPwd = () => {
       </Head>
 
       <div>
+        <AdminNav />
         <div className="flex flex-row">
           <div className="basis-1/6 ">
             <Sidebar />

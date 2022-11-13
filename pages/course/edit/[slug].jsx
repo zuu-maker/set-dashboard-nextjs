@@ -156,62 +156,65 @@ const EditCourse = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex flex-row">
-        <div className="basis-1/6">
-          <Sidebar />
-        </div>
-        <div className="basis-5/6 p-8">
-          <h2 className="text-2xl mb-2 font-semibold">
-            {user && user.role === ADMIN ? "Edit Course" : "Edit Lessons"}
-          </h2>
-          {user && user.role === ADMIN && (
-            <CreateCourseForm
-              handleImage={handleImage}
-              handleChange={handleChange}
-              buttonText={buttonText}
-              setButtonText={setButtonText}
-              preview={preview}
-              setPreview={setPreview}
-              image={image}
-              values={values}
-              editPage={true}
-              handleSubmit={handleSubmit}
-            />
-          )}
-          <hr className="mt-8" />
-          <div>
-            <h4 className="text-xl mb-2 mt-2 font-semibold text-cyan-400">
-              {values?.lessons?.length > 0
-                ? values.lessons.length + " Lesson(s)"
-                : 0 + " Lessons"}
-            </h4>
-            <ul
-              className="w-full text-sm font-medium text-gray-900 bg-white rounded-lg"
-              onDragOver={(e) => e.preventDefault()}
-            >
-              {values?.lessons?.map((item, i) => (
-                <LessonListUpdate
-                  key={i}
-                  setCurrent={setCurrent}
-                  setVisible={setVisible}
-                  handleRemoveLesson={removeLesson}
-                  handleDrop={handleDrop}
-                  handleDrag={handleDrag}
-                  lesson={item}
-                  index={i}
-                />
-              ))}
-            </ul>
-            <UpdateModal
-              values={values}
-              current={current}
-              visible={visible}
-              setVisible={setVisible}
-              setCurrent={setCurrent}
-              slug={slug}
-              setValues={setValues}
-              initalState={initalState}
-            />
+      <div>
+        <AdminNav />
+        <div className="flex flex-row">
+          <div className="basis-1/6">
+            <Sidebar />
+          </div>
+          <div className="basis-5/6 p-8">
+            <h2 className="text-2xl mb-2 font-semibold">
+              {user && user.role === ADMIN ? "Edit Course" : "Edit Lessons"}
+            </h2>
+            {user && user.role === ADMIN && (
+              <CreateCourseForm
+                handleImage={handleImage}
+                handleChange={handleChange}
+                buttonText={buttonText}
+                setButtonText={setButtonText}
+                preview={preview}
+                setPreview={setPreview}
+                image={image}
+                values={values}
+                editPage={true}
+                handleSubmit={handleSubmit}
+              />
+            )}
+            <hr className="mt-8" />
+            <div>
+              <h4 className="text-xl mb-2 mt-2 font-semibold text-cyan-400">
+                {values?.lessons?.length > 0
+                  ? values.lessons.length + " Lesson(s)"
+                  : 0 + " Lessons"}
+              </h4>
+              <ul
+                className="w-full text-sm font-medium text-gray-900 bg-white rounded-lg"
+                onDragOver={(e) => e.preventDefault()}
+              >
+                {values?.lessons?.map((item, i) => (
+                  <LessonListUpdate
+                    key={i}
+                    setCurrent={setCurrent}
+                    setVisible={setVisible}
+                    handleRemoveLesson={removeLesson}
+                    handleDrop={handleDrop}
+                    handleDrag={handleDrag}
+                    lesson={item}
+                    index={i}
+                  />
+                ))}
+              </ul>
+              <UpdateModal
+                values={values}
+                current={current}
+                visible={visible}
+                setVisible={setVisible}
+                setCurrent={setCurrent}
+                slug={slug}
+                setValues={setValues}
+                initalState={initalState}
+              />
+            </div>
           </div>
         </div>
       </div>

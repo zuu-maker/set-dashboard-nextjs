@@ -14,6 +14,12 @@ const StudentRole = ({ id, name, phone, student, i }) => {
     });
   };
 
+  const sub = () => {
+    axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}/submit-subscription`, {
+      id,
+    });
+  };
+
   return (
     <tr
       tabIndex="0"
@@ -43,7 +49,7 @@ const StudentRole = ({ id, name, phone, student, i }) => {
         <div className="focus:ring-2 focus:ring-offset-2 focus:ring-red-300 text-sm leading-none text-gray-600 py-3 px-5 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none">
           <span className="font-semibold">Ends On: </span>
           {"  "}
-          {date.toISOString().split("T")[0]}
+          {date?.toISOString().split("T")[0]}
         </div>
       </td>
 
@@ -57,12 +63,21 @@ const StudentRole = ({ id, name, phone, student, i }) => {
             </div>
           </td>
           <td className="pl-4">
-            <button
-              onClick={cancelSub}
-              className="flex items-center py-3 px-3 text-sm focus:outline-none leading-none text-red-700 bg-red-100 rounded   "
-            >
-              Cancel Subscription
-            </button>
+            {student.subscribed ? (
+              <button
+                onClick={sub}
+                className="flex items-center py-3 px-3 text-sm focus:outline-none leading-none text-green-700 bg-green-100 rounded   "
+              >
+                Subscribe
+              </button>
+            ) : (
+              <button
+                onClick={cancelSub}
+                className="flex items-center py-3 px-3 text-sm focus:outline-none leading-none text-red-700 bg-red-100 rounded   "
+              >
+                Cancel Subscription
+              </button>
+            )}
           </td>
         </>
       )}

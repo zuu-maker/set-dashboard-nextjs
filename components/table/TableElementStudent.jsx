@@ -1,8 +1,12 @@
 import React from "react";
 import Bin from "../util/Bin";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { ADMIN } from "../../features/userSlice";
 
 const TableElementStudent = ({ student }) => {
+  const { user } = useSelector((state) => state);
+
   const deleteStudent = async () => {
     let answer = window.confirm(
       "Are you sure you want to permanetly delete " + student.name + "?"
@@ -53,12 +57,14 @@ const TableElementStudent = ({ student }) => {
         <span className="text-lg font-semibold">{student.city}</span>
       </td>
       <td className="py-3 px-6 text-left">
-        <div
-          onClick={deleteStudent}
-          className="transform hover:text-red-600 cursor-pointer hover:scale-105 mt-2"
-        >
-          <Bin />
-        </div>
+        {user?.role === ADMIN && (
+          <div
+            onClick={deleteStudent}
+            className="transform hover:text-red-600 cursor-pointer hover:scale-105 mt-2"
+          >
+            <Bin />
+          </div>
+        )}
       </td>
     </tr>
   );

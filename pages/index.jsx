@@ -60,8 +60,10 @@ const Home = () => {
 
   useEffect(() => {
     setLoading(true);
-    if (user && user.role !== ADMIN) {
+    if (user && user.role === "Teacher") {
       router.push(`courses/${user.id}`);
+    } else if (user && user.role === "Student") {
+      router.push("study/my-courses");
     }
     setLoading(false);
   }, [user]);
@@ -81,6 +83,7 @@ const Home = () => {
       </Head>
 
       <div>
+        <AdminNav />
         <div className="flex flex-row">
           <div className="basis-1/6 ">
             <Sidebar />{" "}
