@@ -63,7 +63,7 @@ const UpdateLessonForm = ({
           <a
             className="font-md flex-grow text-lg text-cyan-600 dark:text-cyan-500 hover:underline"
             target="_blank"
-            href={pdf.Location}
+            href={pdf?.Location}
             rel="noopener noreferrer"
           >
             link to pdf
