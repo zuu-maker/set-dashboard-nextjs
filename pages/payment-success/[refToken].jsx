@@ -45,6 +45,7 @@ const VerifyToken = () => {
         .childNodes[0].nodeValue.toString();
 
       if (result === "000") {
+        console.log("in verify");
         setIsVerified(true);
         await axios.put(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/verifiy-state`,
