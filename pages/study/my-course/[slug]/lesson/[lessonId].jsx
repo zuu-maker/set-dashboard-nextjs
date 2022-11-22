@@ -9,8 +9,8 @@ import ReactPlayer from "react-player";
 
 const LessonView = () => {
   const router = useRouter();
-  const { lessonId, slug } = router.query;
-
+  const { lessonId, slug, title } = router.query;
+  console.log("in quey-->", router.query);
   const [lesson, setLesson] = useState(null);
 
   const loadLesson = async () => {
