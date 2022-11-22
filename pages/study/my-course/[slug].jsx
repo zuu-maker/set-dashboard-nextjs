@@ -49,7 +49,7 @@ const MyCourse = () => {
             <div>
               <div className="flex justify-center items-center mb-4 mt-2">
                 <ReactPlayer
-                  url={course?.lessons[0]?.video?.Location}
+                  url={current?.video?.Location}
                   width="85%"
                   height="68vh"
                   controls
