@@ -48,12 +48,14 @@ const MyCourse = () => {
 
             <div>
               <div className="flex justify-center items-center mb-4 mt-2">
-                <ReactPlayer
-                  url={current?.video?.Location}
-                  width="85%"
-                  height="68vh"
-                  controls
-                />
+                <div className="sm:w-5/6 w-full sm:h-5/6 h-60 ">
+                  <ReactPlayer
+                    url={current?.video?.Location}
+                    width="100%"
+                    height="100%"
+                    controls
+                  />
+                </div>
               </div>
               <div className="flex items-center justify-between ">
                 <h2 className="text-2xl text-cyan-700 font-bold mb-2">

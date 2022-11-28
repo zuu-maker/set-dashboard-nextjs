@@ -16,7 +16,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className=" fixed h-screen py-4 pl-3 pr-8 bg-gray-50 ">
+    <div className="hidden sm:block sm:fixed h-screen py-4 pl-3 pr-8 bg-gray-50 ">
       <ul className="space-y-2">
         {user && user.role === ADMIN && (
           <>

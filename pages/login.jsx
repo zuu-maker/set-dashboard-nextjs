@@ -103,7 +103,7 @@ const Login = () => {
         <title>SET - Login</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex flex-col bg-gray-50 p-20 shadow-lg w-3/6">
+      <div className="flex flex-col bg-gray-50 p-2 sm:p-20 shadow-lg w-4/5 sm:w-3/6">
         <div className="p-5 bg-gray-100 flex items-center justify-between">
           <Image src="/logo.png" width={72} height={68} className="mr-3 " />
           <h1 className="text-2xl font-bold text-sky-400">Login</h1>

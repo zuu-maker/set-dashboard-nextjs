@@ -9,8 +9,7 @@ import ReactPlayer from "react-player";
 
 const LessonView = () => {
   const router = useRouter();
-  const { lessonId, slug, title } = router.query;
-  console.log("in quey-->", router.query);
+  const { lessonId, slug } = router.query;
   const [lesson, setLesson] = useState(null);
 
   const loadLesson = async () => {
@@ -33,12 +32,12 @@ const LessonView = () => {
         <AdminNav />
         <div className="">
           <div className="container mx-auto px-8 pt-8 pb-16">
-            <div className="flex justify-center items-center mb-4">
+            <div className="flex w-5/6 h-2/5 bg-red-600 p-10 sm:h-5/6 justify-center items-center mb-4">
               {lesson && lesson.video && lesson.video.Location && (
                 <ReactPlayer
                   url={lesson.video.Location}
-                  width="85%"
-                  height="68vh"
+                  width="100%"
+                  height="100%"
                   controls
                 />
               )}
