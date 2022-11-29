@@ -28,15 +28,12 @@ const AuthCheck = ({ children }) => {
   };
 
   useEffect(() => {
-    setLoader(true);
     const unsubscribe = auth.onAuthStateChanged((_user) => {
       if (_user) {
         _user.getIdTokenResult().then((idTokenResult) => {
           if (idTokenResult.token.length > 0) {
             getCurrentUser(idTokenResult.token, _user.email)
               .then((res) => {
-                console.log(res);
-                // router.push("/study/my-courses");
                 dispatch(
                   setUser({
                     id: res.data._id,
@@ -46,17 +43,6 @@ const AuthCheck = ({ children }) => {
                     role: res.data.role,
                   })
                 );
-                // else {
-                //   dispatch(
-                //     setUser({
-                //       id: res.data._id,
-                //       name: res.data.name,
-                //       email: res.data.email,
-                //       token: idTokenResult.token,
-                //       role: res.data.role,
-                //     })
-                //   );
-                // }
               })
               .catch((err) => {
                 console.log(err);

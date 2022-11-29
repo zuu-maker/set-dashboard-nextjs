@@ -11,8 +11,12 @@ const AdminNav = () => {
   const dispatch = useDispatch();
 
   const handleSignOut = async () => {
-    await signOut(auth);
-    dispatch(logOutUser());
+    let answer = window.confirm("Are you sure you want to log out?");
+
+    if (answer) {
+      await signOut(auth);
+      dispatch(logOutUser());
+    }
   };
 
   return (
