@@ -20,8 +20,10 @@ const MyCourse = () => {
     const data = await readMyCourse(slug, user.id);
     if (data.ok) {
       setCurrent(data.course?.lessons[0]);
+      console.log(data);
       setCourse(data.course);
     }
+    console.log("the data ->", data);
   };
 
   useEffect(() => {

@@ -25,8 +25,15 @@ const Login = () => {
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (user && user.token) router.push("/course");
-  }, []);
+    if (user && user.token) {
+      if (user && user.role === "Teacher") {
+        router.push(`courses/${user.id}`);
+      } else if (user && user.role === "Student") {
+        router.push("study/my-courses");
+      }
+      router.push("/");
+    }
+  }, [user]);
 
   const getCurrentUser = async (token, _email) => {
     console.log(_email);

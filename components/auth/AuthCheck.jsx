@@ -41,6 +41,7 @@ const AuthCheck = ({ children }) => {
                     email: res.data.email,
                     token: idTokenResult.token,
                     role: res.data.role,
+                    isVerified: _user.emailVerified,
                   })
                 );
               })
