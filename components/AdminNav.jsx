@@ -24,7 +24,7 @@ const AdminNav = () => {
       <nav className="bg-white  border-gray-200  ">
         <div className="flex items-center px-4 md:px-6 py-2.5 justify-between">
           <div className="flex items-center gap-4">
-            <Image src="/logo.png" width={68} height={60} className="mr-3 " />
+            <Image src="/logo.png" width={64} height={64} className="mr-3 " />
           </div>
           <span className="self-center text-lg white  space-nowrap text-sky-900">
             <span className="font-bold">{user && `${user.role}:`}</span>{" "}

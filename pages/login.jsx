@@ -186,7 +186,7 @@ const Login = () => {
                   fill="currentFill"
                 />
               </svg>
-              Loging In....
+              Logging In....
             </div>
           ) : (
             <span>login</span>

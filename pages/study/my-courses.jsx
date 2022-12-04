@@ -78,12 +78,12 @@ const EnrolledCourses = () => {
                           <button
                             onClick={() =>
                               alert(
-                                "Your account subscription has expired, Please go to the enrolled courses tab on your app and proceed to renew your course subscription"
+                                "Your account subscription has expired. Please go to the enrolled courses tab on your app and proceed to renew your course subscription."
                               )
                             }
                             className="text-white w-full bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 font-medium text-sm px-5 py-2.5 text-center mr-2 mb-2"
                           >
-                            Course Subscription Exxpired
+                            Course Subscription Expired
                           </button>
                         )}
                       </div>
