@@ -90,6 +90,8 @@ const Login = () => {
                     isVerified: userCredentials.user.emailVerified,
                   })
                 );
+              })
+              .then(() => {
                 if (res.data.role === "Admin") {
                   router.push("/");
                   setDisable(false);
