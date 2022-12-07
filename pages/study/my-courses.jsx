@@ -63,7 +63,7 @@ const EnrolledCourses = () => {
                         </p>
                       </div>
                       <div className="flex p-2 justify-center items-center">
-                        {item.course.subscribed ? (
+                        {item.subscribed ? (
                           <button
                             onClick={() =>
                               router.push(

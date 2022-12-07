@@ -172,9 +172,9 @@ const Login = () => {
           onClick={handleLogin}
         >
           {loading ? (
-            <div className="flex w-full px-10 sm:px-40 justify-between items-center">
+            <div className="flex w-full px-10 sm:px-40 justify-center items-center">
               <svg
-                className=" w-8 h-8 text-gray-200 animate-spin fill-cyan-600"
+                className=" w-7 h-7 text-gray-200 animate-spin fill-cyan-600"
                 viewBox="0 0 100 101"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -188,7 +188,6 @@ const Login = () => {
                   fill="currentFill"
                 />
               </svg>
-              Logging In....
             </div>
           ) : (
             <span>login</span>
