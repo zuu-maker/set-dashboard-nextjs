@@ -14,6 +14,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 import { ADMIN } from "../../../features/userSlice";
+import AdminRoute from "../../../components/routes/AdminRoute";
 
 const initalState = {
   _id: "",
@@ -150,7 +151,7 @@ const EditCourse = () => {
   };
 
   return (
-    <div>
+    <AdminRoute>
       <Head>
         <title>SET - Update Course</title>
         <link rel="icon" href="/favicon.ico" />
@@ -218,7 +219,7 @@ const EditCourse = () => {
           </div>
         </div>
       </div>
-    </div>
+    </AdminRoute>
   );
 };
 

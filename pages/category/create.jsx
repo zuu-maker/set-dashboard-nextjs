@@ -6,6 +6,7 @@ import AdminCategory from "../../components/AdminCategory";
 
 import { createCategory, readCategories } from "../../lib/category";
 import Loader from "../../components/util/Loader";
+import AdminRoute from "../../components/routes/AdminRoute";
 
 const CreateCategory = () => {
   const [name, setName] = useState("");
@@ -36,7 +37,7 @@ const CreateCategory = () => {
   };
 
   return (
-    <div>
+    <AdminRoute>
       <Head>
         <title>SET - Create Category</title>
         <link rel="icon" href="/favicon.ico" />
@@ -87,7 +88,7 @@ const CreateCategory = () => {
           </div>
         </div>
       </div>
-    </div>
+    </AdminRoute>
   );
 };
 

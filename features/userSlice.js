@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = null;
+let initialState = null;
+
 export const ADMIN = "Admin";
 export const TEACHER = "Teacher";
+
+console.log("im here");
 
 export const userSlice = createSlice({
   name: "user",

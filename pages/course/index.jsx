@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import AdminCourse from "../../components/AdminCourse";
 import { readCourses } from "../../lib/course";
+import AdminRoute from "../../components/routes/AdminRoute";
 
 const CourseIndex = () => {
   const user = useSelector((state) => state.user);
@@ -24,7 +25,7 @@ const CourseIndex = () => {
   }, []);
 
   return (
-    <div>
+    <AdminRoute>
       <Head>
         <title>SET - All Courses</title>
         <link rel="icon" href="/favicon.ico" />
@@ -48,7 +49,7 @@ const CourseIndex = () => {
           </div>
         </div>
       </div>
-    </div>
+    </AdminRoute>
   );
 };
 

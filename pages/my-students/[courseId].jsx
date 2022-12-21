@@ -2,49 +2,10 @@ import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Sidebar from "../../components/Sidebar";
 import StudentTable from "../../components/table/Table";
-import { useSelector } from "react-redux";
 import { readMyStudents } from "../../lib/teacher";
 import { useRouter } from "next/router";
 import AdminNav from "../../components/AdminNav";
-
-const students = [
-  {
-    name: "Jane Doe",
-    phone: "095587656",
-    subcription: {
-      paidOn: "21St Jan 2020",
-      subDuration: "1 Month",
-      endsOn: "21ST Feb 2023",
-    },
-  },
-  {
-    name: "Jane Doe",
-    phone: "095587656",
-    subcription: {
-      paidOn: "21St Jan 2020",
-      subDuration: "1 Month",
-      endsOn: "21ST Feb 2023",
-    },
-  },
-  {
-    name: "Jane Doe",
-    phone: "095587656",
-    subcription: {
-      paidOn: "21St Jan 2020",
-      subDuration: "1 Month",
-      endsOn: "21ST Feb 2023",
-    },
-  },
-  {
-    name: "Jane Doe",
-    phone: "095587656",
-    subcription: {
-      paidOn: "21St Jan 2020",
-      subDuration: "1 Month",
-      endsOn: "21ST Feb 2023",
-    },
-  },
-];
+import TeacherRoute from "../../components/routes/TeacherRoute";
 
 const tableHead = [
   "Name",
@@ -74,7 +35,7 @@ const MyStudents = () => {
   }, [courseId]);
 
   return (
-    <div>
+    <TeacherRoute>
       <Head>
         <title>SET - My Students</title>
         <link rel="icon" href="/favicon.ico" />
@@ -98,7 +59,7 @@ const MyStudents = () => {
           </div>
         </div>
       </div>
-    </div>
+    </TeacherRoute>
   );
 };
 

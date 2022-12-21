@@ -3,11 +3,8 @@ import Head from "next/head";
 import Sidebar from "../components/Sidebar";
 import AdminNav from "../components/AdminNav";
 import CreateUserForm from "../components/CreateUserForm";
-import { sendEmailVerification } from "firebase/auth";
-import { auth } from "../firebase";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { useRouter } from "next/router";
+import AdminRoute from "../components/routes/AdminRoute";
 
 const initialValues = {
   name: "",
@@ -54,7 +51,7 @@ const CreateUser = () => {
   };
 
   return (
-    <div className="">
+    <AdminRoute>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
@@ -76,7 +73,7 @@ const CreateUser = () => {
           </div>
         </div>
       </div>
-    </div>
+    </AdminRoute>
   );
 };
 

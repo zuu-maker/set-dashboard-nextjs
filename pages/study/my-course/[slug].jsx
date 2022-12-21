@@ -7,6 +7,7 @@ import { readMyCourse } from "../../../lib/course";
 import LessonListStudent from "../../../components/LessonListStudent";
 import ReactPlayer from "react-player";
 import { useSelector } from "react-redux";
+import StudentRoute from "../../../components/routes/StudentRoute";
 
 const MyCourse = () => {
   const { user } = useSelector((state) => state);
@@ -34,7 +35,7 @@ const MyCourse = () => {
   }, [slug, user]);
 
   return (
-    <div>
+    <StudentRoute>
       <Head>
         <title>SET - Learning</title>
         <link rel="icon" href="/favicon.ico" />
@@ -145,7 +146,7 @@ const MyCourse = () => {
           </div>
         </div>
       </div>
-    </div>
+    </StudentRoute>
   );
 };
 

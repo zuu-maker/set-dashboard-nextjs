@@ -4,10 +4,13 @@ import Sidebar from "../components/Sidebar";
 import AdminNav from "../components/AdminNav";
 import { auth } from "../firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
+import { useSelector } from "react-redux";
 
 const ResetPwd = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const user = useSelector((state) => state.user);
 
   const handleSubmit = () => {
     setLoading(true);
@@ -34,9 +37,7 @@ const ResetPwd = () => {
       <div>
         <AdminNav />
         <div className="flex flex-row">
-          <div className="basis-1/6 ">
-            <Sidebar />
-          </div>
+          <div className="basis-1/6 ">{user && user.id && <Sidebar />}</div>
           <div className="basis-5/6 -ml-10 p-8">
             <h2 className="text-2xl font-semibold mb-3">Reset Password</h2>
             <div className="w-1/3">

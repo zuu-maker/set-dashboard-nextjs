@@ -12,7 +12,7 @@ const TransactionElement = ({ el }) => {
       <td className="py-3 px-6">
         <div className="flex items-left">
           <span className="text-lg font-semibold">
-            {el && el.courseId.name}
+            {el && el?.courseId?.name}
           </span>
         </div>
       </td>

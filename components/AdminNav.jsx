@@ -5,10 +5,12 @@ import Image from "next/image";
 import { auth } from "../firebase";
 import { logOutUser } from "../features/userSlice";
 import { signOut } from "firebase/auth";
+import { useRouter } from "next/router";
 
 const AdminNav = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  let router = useRouter();
 
   const handleSignOut = async () => {
     let answer = window.confirm("Are you sure you want to log out?");
@@ -16,6 +18,7 @@ const AdminNav = () => {
     if (answer) {
       await signOut(auth);
       dispatch(logOutUser());
+      router.push("/login");
     }
   };
 
@@ -36,6 +39,26 @@ const AdminNav = () => {
         <div className="py-3 px-4 md:px-6">
           <div className="flex items-center">
             <ul className="flex flex-row mt-0 mr-6 space-x-8 text-smfont-medium">
+              {user && user.id && (
+                <Link href="/">
+                  <li>
+                    <a href="#" className=" text-gray-900 hover:underline">
+                      Study
+                    </a>
+                  </li>
+                </Link>
+              )}
+
+              {user && user.id && (
+                <Link href="/orders">
+                  <li>
+                    <a href="#" className=" text-gray-900 hover:underline">
+                      Orders
+                    </a>
+                  </li>
+                </Link>
+              )}
+
               <Link href="/reset-password">
                 <li>
                   <a href="#" className=" text-gray-900 hover:underline">
@@ -44,11 +67,13 @@ const AdminNav = () => {
                 </li>
               </Link>
 
-              <li onClick={handleSignOut}>
-                <a href="#" className=" text-gray-900 hover:underline">
-                  Log Out
-                </a>
-              </li>
+              {user && user.id && (
+                <li onClick={handleSignOut}>
+                  <a href="#" className=" text-gray-900 hover:underline">
+                    Log Out
+                  </a>
+                </li>
+              )}
             </ul>
           </div>
         </div>

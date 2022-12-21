@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import AdminCourse from "../components/AdminCourse";
 import { readCourses } from "../lib/course";
 import Loader from "../components/util/Loader";
-import AuthCheck from "../components/auth/AuthCheck";
+import AdminRoute from "../components/routes/AdminRoute";
 
 const AllCourses = () => {
   const user = useSelector((state) => state.user);
@@ -28,7 +28,7 @@ const AllCourses = () => {
   }, []);
 
   return (
-    <React.Fragment>
+    <AdminRoute>
       <Head>
         <title>SET - All Courses</title>
         <link rel="icon" href="/favicon.ico" />
@@ -58,7 +58,7 @@ const AllCourses = () => {
           </div>
         </div>
       </div>
-    </React.Fragment>
+    </AdminRoute>
   );
 };
 

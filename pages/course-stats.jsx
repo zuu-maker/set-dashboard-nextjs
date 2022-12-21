@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar";
 import AdminNav from "../components/AdminNav";
 import StatsTable from "../components/table/Table";
 import { readWithTeachers } from "../lib/course";
+import AdminRoute from "../components/routes/AdminRoute";
 
 const tableHead = [
   "Course Name",
@@ -31,7 +32,7 @@ const CourseStats = () => {
   }, []);
 
   return (
-    <div>
+    <AdminRoute>
       <Head>
         <title>SET - Course Stats</title>
 
@@ -50,7 +51,7 @@ const CourseStats = () => {
           </div>
         </div>
       </div>
-    </div>
+    </AdminRoute>
   );
 };
 

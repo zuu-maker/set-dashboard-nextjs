@@ -5,6 +5,7 @@ import Sidebar from "../../components/Sidebar";
 import { useRouter } from "next/router";
 
 import { updateCategory, readCategory } from "../../lib/category";
+import AdminRoute from "../../components/routes/AdminRoute";
 
 const CategoryEdit = () => {
   const router = useRouter();
@@ -44,7 +45,7 @@ const CategoryEdit = () => {
   };
 
   return (
-    <div>
+    <AdminRoute>
       <Head>
         <title>SET - Update Category</title>
         <link rel="icon" href="/favicon.ico" />
@@ -78,7 +79,7 @@ const CategoryEdit = () => {
           </div>
         </div>
       </div>
-    </div>
+    </AdminRoute>
   );
 };
 

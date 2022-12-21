@@ -7,10 +7,10 @@ import { setUser } from "../features/userSlice";
 import {
   sendEmailVerification,
   signInWithEmailAndPassword,
-  signOut,
 } from "firebase/auth";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import Link from "next/link";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -21,19 +21,6 @@ const Login = () => {
   const [error, setError] = useState("");
   const [disable, setDisable] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const user = useSelector((state) => state.user);
-
-  useEffect(() => {
-    if (user && user.token) {
-      if (user && user.role === "Teacher") {
-        router.push(`courses/${user.id}`);
-      } else if (user && user.role === "Student") {
-        router.push("study/my-courses");
-      }
-      router.push("/");
-    }
-  }, [user]);
 
   const getCurrentUser = async (token, _email) => {
     console.log(_email);
@@ -90,14 +77,13 @@ const Login = () => {
                     isVerified: userCredentials.user.emailVerified,
                   })
                 );
-              })
-              .then(() => {
                 if (res.data.role === "Admin") {
-                  router.push("/");
+                  router.push("/admin");
                   setDisable(false);
                   setLoading(false);
                 } else if (res.data.role === "Student") {
-                  router.push("/study/my-courses");
+                  console.log("Push to home");
+                  router.push("/");
                   setDisable(false);
                   setLoading(false);
                 } else {
@@ -165,7 +151,9 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-
+        {error && error.length > 0 && (
+          <p className="text-xs sm:text-sm text-red-500">{error}</p>
+        )}
         <button
           className="text-white bg-gradient-to-r flex justify-center from-sky-500 via-sky-600 to-sky-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center mt-2 mr-2 mb-2 text-lg w-full"
           disabled={!email || !password || disable}
@@ -193,9 +181,14 @@ const Login = () => {
             <span>login</span>
           )}
         </button>
-        {error && error.length > 0 && (
-          <p className="text-xs sm:text-sm text-red-500">{error}</p>
-        )}
+        <div className="p-2 flex justify-between text-base text-gray-600">
+          <Link className="hover:underline" href="/reset-password">
+            Forgot Password?
+          </Link>
+          <Link className="hover:underline" href="/register">
+            Register
+          </Link>
+        </div>
       </div>
     </div>
   );

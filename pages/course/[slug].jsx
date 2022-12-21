@@ -17,6 +17,7 @@ import Loader from "../../components/util/Loader";
 import { useSelector } from "react-redux";
 
 import { TEACHER, ADMIN } from "../../features/userSlice";
+import AdminRoute from "../../components/routes/AdminRoute";
 
 const CourseView = () => {
   const router = useRouter();
@@ -89,7 +90,7 @@ const CourseView = () => {
   }, [slug]);
 
   return (
-    <div>
+    <AdminRoute>
       <Head>
         <title>SET - Course</title>
         <link rel="icon" href="/favicon.ico" />
@@ -204,7 +205,7 @@ const CourseView = () => {
           </div>
         </div>
       </div>
-    </div>
+    </AdminRoute>
   );
 };
 

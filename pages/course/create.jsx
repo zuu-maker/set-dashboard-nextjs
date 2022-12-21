@@ -6,6 +6,7 @@ import Sidebar from "../../components/Sidebar";
 import CreateCourseForm from "../../components/CreateCourseForm";
 import axios from "axios";
 import { createCourse, removeImage, uploadImage } from "../../lib/course";
+import AdminRoute from "../../components/routes/AdminRoute";
 /* 
   1.finish image upload - done
   2.push to aws - done
@@ -107,7 +108,7 @@ const CreateCourse = () => {
   };
 
   return (
-    <div>
+    <AdminRoute>
       <Head>
         <title>SET - Create Course</title>
         <link rel="icon" href="/favicon.ico" />
@@ -133,7 +134,7 @@ const CreateCourse = () => {
           </div>
         </div>
       </div>
-    </div>
+    </AdminRoute>
   );
 };
 

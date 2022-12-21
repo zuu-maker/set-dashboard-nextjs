@@ -5,13 +5,15 @@ import StudentRole from "../../components/table/StudentRole";
 import { useEffect } from "react";
 import { readSubs } from "../../lib/student";
 import AdminNav from "../../components/AdminNav";
+import AdminRoute from "../../components/routes/AdminRoute";
 
 const allStudents = () => {
   const [subscriptions, setSubscriptions] = useState([]);
+  const [page, setPage] = useState(1);
 
   const loadSubs = async () => {
-    const _subs = await readSubs();
-    console.log(_subs);
+    const _subs = await readSubs(page);
+    setPage(page + 1);
     setSubscriptions(_subs);
   };
 
@@ -19,7 +21,7 @@ const allStudents = () => {
     loadSubs();
   }, []);
   return (
-    <div>
+    <AdminRoute>
       <Head>
         <title>SET - All Students </title>
         <link rel="icon" href="/favicon.ico" />
@@ -72,10 +74,18 @@ const allStudents = () => {
                 </tbody>
               </table>
             </div>
+            {subscriptions?.length >= 20 && (
+              <button
+                onClick={loadSubs}
+                className="text-white bg-gradient-to-r from-cyan-500 via-cyan-600 to-cyan-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 mr-2 mb-2"
+              >
+                Load 20 More
+              </button>
+            )}
           </div>
         </div>
       </div>
-    </div>
+    </AdminRoute>
   );
 };
 

@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { logOutUser, setUser } from "../../features/userSlice";
+import { setUser } from "../../features/userSlice";
 import { auth } from "../../firebase";
-import { useRouter } from "next/router";
-import { signOut } from "firebase/auth";
 import Loader from "../util/Loader";
 
 const AuthCheck = ({ children }) => {
-  const router = useRouter();
   const dispatch = useDispatch();
 
   const [loader, setLoader] = useState(true);
@@ -49,13 +46,10 @@ const AuthCheck = ({ children }) => {
                 console.log(err);
                 alert(err);
               });
-            setLoader(false);
           }
         });
-      } else {
-        router.push("/login");
-        setLoader(false);
       }
+      setLoader(false);
     });
 
     return () => unsubscribe();
