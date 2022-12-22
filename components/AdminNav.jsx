@@ -43,7 +43,7 @@ const AdminNav = () => {
                 <Link href="/">
                   <li>
                     <a href="#" className=" text-gray-900 hover:underline">
-                      Study
+                      My Courses
                     </a>
                   </li>
                 </Link>
