@@ -10,7 +10,6 @@ import {
 } from "firebase/auth";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { useSelector } from "react-redux";
 import Link from "next/link";
 
 const register = () => {
@@ -28,19 +27,6 @@ const register = () => {
     city: "",
     password: "",
   });
-
-  const user = useSelector((state) => state.user);
-
-  useEffect(() => {
-    if (user && user.token) {
-      if (user && user.role === "Teacher") {
-        router.push(`/courses/${user.id}`);
-      } else if (user && user.role === "Student") {
-        router.push("/study/my-courses");
-      }
-      router.push("/");
-    }
-  }, [user]);
 
   const { name, password, email, city, phone } = data;
 

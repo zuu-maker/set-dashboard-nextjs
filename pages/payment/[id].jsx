@@ -66,13 +66,11 @@ const payment = () => {
     //note this email comes from the previous page
     let refToken = info.userId + "-" + refTokenRight;
 
-    console.log("refToken --> ", refToken);
-
     try {
       let parser = new DOMParser();
 
       const { data } = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/pay2g/dpo/create-token`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/pay/dpo/create-token`,
         {
           amount: 0.05,
           email,
@@ -84,10 +82,14 @@ const payment = () => {
         }
       );
 
+      console.log("created");
+
       let doc = parser.parseFromString(data.data, "text/xml");
       let result = doc
         .getElementsByTagName("Result")[0]
         .childNodes[0].nodeValue.toString();
+
+      console.log("result --.", result);
 
       if (result !== "000") {
         let _error = doc
@@ -95,7 +97,7 @@ const payment = () => {
           .childNodes[0].nodeValue.toString();
         setError(_error);
         console.log(_error);
-        setLoading(false);
+        setLoader(false);
         return;
       }
 
@@ -105,7 +107,7 @@ const payment = () => {
 
       if (result === "000" && transactionToken && transactionToken.length > 0) {
         setToken(transactionToken);
-
+        console.log("here");
         //please do course id and user id stuff
         const { data } = await axios.post(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/create-order`,
@@ -117,7 +119,13 @@ const payment = () => {
             tokenCreatedAt: date.getTime(),
           }
         );
-        if (data === "ok") setChecked(true);
+
+        if (data === "ok") {
+          setChecked(true);
+          await axios.delete(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/delete-info/${id}`
+          );
+        }
       } else {
         if (!error && !error.length === 0) {
           setError("Too many requests try again later");
@@ -178,7 +186,7 @@ const payment = () => {
             <h4 className="text-center font-bold text-lg ">
               Amount:{" "}
               <span className="font-normal">
-                {info?.courseId?.price.toLocaleString("en-US", {
+                {info?.courseId?.price?.toLocaleString("en-US", {
                   style: "currency",
                   currency: "ZMK",
                 })}
