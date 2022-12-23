@@ -9,7 +9,6 @@ import TransactionTable from "../components/table/Table";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ADMIN } from "../features/userSlice";
-import { useRouter } from "next/router";
 import { totalCoursesFromDb, totalPublishedFromDb } from "../lib/course";
 import { totalStudents } from "../lib/student";
 import { totalTeachers } from "../lib/teacher";
@@ -30,9 +29,8 @@ const tableHead = [
 
 const Admin = () => {
   const { user } = useSelector((state) => state);
-  const router = useRouter();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState(null);
   const [page, setPage] = useState(1);
   const [data, setData] = useState({
@@ -59,12 +57,6 @@ const Admin = () => {
       totalPublishedCourses: tpc,
     }));
   };
-
-  // useEffect(() => {
-  //   setLoading(true);
-
-  //   setLoading(false);
-  // }, [user]);
 
   useEffect(() => {
     if (user && user.role === ADMIN) {
