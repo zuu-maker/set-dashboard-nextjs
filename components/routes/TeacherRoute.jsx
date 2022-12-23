@@ -11,7 +11,6 @@ const TeacherRoute = ({ children }) => {
   useEffect(() => {
     if (user && user.role === "Teacher") {
       setShow(true);
-      router.push(`/courses/${res.data._id}`);
     } else if (user && user.role === "Student") {
       router.push("/");
     }

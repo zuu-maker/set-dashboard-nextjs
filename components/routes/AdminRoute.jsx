@@ -10,7 +10,6 @@ const AdminRoute = ({ children }) => {
 
   useEffect(() => {
     if (user && user.role === "Admin") {
-      router.push("/admin");
       setShow(true);
     } else if (user && user.role === "Teacher") {
       router.push(`/courses/${res.data._id}`);
