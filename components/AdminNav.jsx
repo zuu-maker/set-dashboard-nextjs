@@ -39,7 +39,7 @@ const AdminNav = () => {
         <div className="py-3 px-4 md:px-6">
           <div className="flex items-center">
             <ul className="flex flex-row mt-0 mr-6 space-x-8 text-smfont-medium">
-              {user && user.id && (
+              {user && user.id && user.role === "Student" && (
                 <Link href="/">
                   <li>
                     <a href="#" className=" text-gray-900 hover:underline">
@@ -49,7 +49,7 @@ const AdminNav = () => {
                 </Link>
               )}
 
-              {user && user.id && (
+              {user && user.id && user.role === "Student" && (
                 <Link href="/orders">
                   <li>
                     <a href="#" className=" text-gray-900 hover:underline">
