@@ -17,7 +17,7 @@ const StudentRoute = ({ children }) => {
       router.push("/admin");
       setShow(true);
     } else if (user && user.role === "Teacher") {
-      router.push(`/courses/${res.data._id}`);
+      router.push(`/courses/${user.id}`);
     }
   }, [user]);
 

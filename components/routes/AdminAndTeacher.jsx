@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 
-const AdminRoute = ({ children }) => {
+const AdminAndTeacher = ({ children }) => {
   const router = useRouter();
   const user = useSelector((state) => state.user);
 
@@ -12,7 +12,7 @@ const AdminRoute = ({ children }) => {
     if (user && user.role === "Admin") {
       setShow(true);
     } else if (user && user.role === "Teacher") {
-      router.push(`/courses/${user.id}`);
+      setShow(true);
     } else if (user && user.role === "Student") {
       router.push("/");
     }
@@ -21,4 +21,4 @@ const AdminRoute = ({ children }) => {
   return <>{show && children}</>;
 };
 
-export default AdminRoute;
+export default AdminAndTeacher;
