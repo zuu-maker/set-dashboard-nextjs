@@ -58,7 +58,7 @@ const Login = () => {
               sendEmailVerification(userCredentials.user)
                 .then(() => {
                   alert(
-                    `Email Verification link has been sent to${userCredentials.user.email}`
+                    `Email Verification link has been sent to" "${userCredentials.user.email}, please check your span folder and other related folders.`
                   );
                 })
                 .catch((err) => {

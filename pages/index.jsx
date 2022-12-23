@@ -94,6 +94,7 @@ const Home = () => {
                   <span className="text-cyan-600 font-semibold underline ">
                     {user && user.email}
                   </span>
+                  , please check your spam folder and any other related folders.
                 </h4>
               </div>
             )}
