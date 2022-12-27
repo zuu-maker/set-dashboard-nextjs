@@ -41,7 +41,7 @@ const CreateUser = () => {
 
     createUserInDb()
       .then((res) => {
-        console.log(res.data);
+        setValues(initialValues);
         alert("User Added to db, please add user to firebase authentication");
       })
       .catch((err) => {
