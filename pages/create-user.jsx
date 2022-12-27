@@ -53,7 +53,7 @@ const CreateUser = () => {
   return (
     <AdminRoute>
       <Head>
-        <title>Create Next App</title>
+        <title>Add Teacher</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
