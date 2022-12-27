@@ -12,6 +12,7 @@ import { removeLessonFromDb } from "../../../lib/lesson";
 import UpdateModal from "../../../components/UpdateModal";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Resizer from "react-image-file-resizer";
 
 import { ADMIN } from "../../../features/userSlice";
 import AdminAndTeacher from "../../../components/routes/AdminAndTeacher";

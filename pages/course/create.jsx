@@ -4,7 +4,6 @@ import Resizer from "react-image-file-resizer";
 import AdminNav from "../../components/AdminNav";
 import Sidebar from "../../components/Sidebar";
 import CreateCourseForm from "../../components/CreateCourseForm";
-import axios from "axios";
 import { createCourse, removeImage, uploadImage } from "../../lib/course";
 import AdminRoute from "../../components/routes/AdminRoute";
 /* 
