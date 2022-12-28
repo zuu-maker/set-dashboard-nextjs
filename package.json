@@ -13,6 +13,7 @@
     "next": "latest",
     "rc-progress": "^3.4.0",
     "react": "18.1.0",
+    "react-csv": "^2.2.2",
     "react-dom": "18.1.0",
     "react-image-file-resizer": "^0.4.8",
     "react-player": "^2.11.0",

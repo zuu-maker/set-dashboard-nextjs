@@ -6,9 +6,19 @@ import { useEffect } from "react";
 import { readSubs } from "../../lib/student";
 import AdminNav from "../../components/AdminNav";
 import AdminRoute from "../../components/routes/AdminRoute";
+import { CSVLink } from "react-csv";
+import axios from "axios";
+
+const headers = [
+  { label: "Name", key: "name" },
+  { label: "Email", key: "email" },
+  { label: "Phone", key: "phone" },
+  { label: "City", key: "city" },
+];
 
 const allStudents = () => {
   const [subscriptions, setSubscriptions] = useState([]);
+  const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
 
   const loadSubs = async () => {
@@ -20,6 +30,20 @@ const allStudents = () => {
   useEffect(() => {
     loadSubs();
   }, []);
+
+  const getData = async () => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/not-subscribed`
+      );
+      setData(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+      alert("failed to get users");
+    }
+  };
+
   return (
     <AdminRoute>
       <Head>
@@ -74,14 +98,33 @@ const allStudents = () => {
                 </tbody>
               </table>
             </div>
-            {subscriptions?.length >= 20 && (
-              <button
-                onClick={loadSubs}
-                className="text-white bg-gradient-to-r from-cyan-500 via-cyan-600 to-cyan-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 mr-2 mb-2"
-              >
-                Load 20 More
-              </button>
-            )}
+            <div className="flex items-center justify-between w-full px-5">
+              {data.length > 0 ? (
+                <CSVLink
+                  filename={"not-subscribed.csv"}
+                  headers={headers}
+                  data={data}
+                  className="text-white bg-gradient-to-r from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 mr-2 mb-2"
+                >
+                  Download Data
+                </CSVLink>
+              ) : (
+                <button
+                  onClick={getData}
+                  className="text-white bg-gradient-to-r from-cyan-500 via-cyan-600 to-cyan-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 mr-2 mb-2"
+                >
+                  Get Data
+                </button>
+              )}
+              {subscriptions?.length >= 20 && (
+                <button
+                  onClick={loadSubs}
+                  className="text-white bg-gradient-to-r from-cyan-500 via-cyan-600 to-cyan-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 mr-2 mb-2"
+                >
+                  Load 20 More
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
