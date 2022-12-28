@@ -5,12 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { logOutUser } from "../features/userSlice";
 import { auth } from "../firebase";
 import { ADMIN } from "../features/userSlice";
+import Router from "next/router";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state);
 
   const handleSignOut = async () => {
+    Router.push("/login");
     await signOut(auth);
     dispatch(logOutUser());
   };

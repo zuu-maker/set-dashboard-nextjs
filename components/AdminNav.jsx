@@ -16,9 +16,9 @@ const AdminNav = () => {
     let answer = window.confirm("Are you sure you want to log out?");
 
     if (answer) {
-      router.push("/login");
       await signOut(auth);
       dispatch(logOutUser());
+      router.push("/login");
     }
   };
 
