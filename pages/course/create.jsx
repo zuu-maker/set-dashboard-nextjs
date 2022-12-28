@@ -32,6 +32,7 @@ const initialValues = {
   teacher: "",
   uploading: false,
   loading: false,
+  image: initialImage,
 };
 
 const CreateCourse = () => {
@@ -129,6 +130,7 @@ const CreateCourse = () => {
               preview={preview}
               buttonText={buttonText}
               handleRemove={handleRemove}
+              image={image}
             />
           </div>
         </div>

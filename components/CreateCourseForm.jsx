@@ -174,7 +174,7 @@ const CreateCourseForm = ({
                 />
               </label>
 
-              {editPage && values.image && (
+              {editPage && values.image && values.image.Location && (
                 <div className="relative">
                   <img
                     src={values.image.Location}
@@ -202,26 +202,49 @@ const CreateCourseForm = ({
                 </div>
               )}
             </div>
-            <button
-              disabled={
-                values.loading ||
-                values.uploading ||
-                !values.image.Location ||
-                !values.teacher ||
-                !values.category ||
-                !values.duration ||
-                !values.start ||
-                !values.end ||
-                !values.name ||
-                !values.description ||
-                !values.price
-              }
-              onClick={handleSubmit}
-              type="button"
-              className="text-white w-full disabled:opacity-60 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 mr-2 mb-2"
-            >
-              Save and Continue
-            </button>
+            {editPage ? (
+              <button
+                disabled={
+                  values.loading ||
+                  values.uploading ||
+                  !values.image?.Location ||
+                  !values.teacher ||
+                  !values.category ||
+                  !values.duration ||
+                  !values.start ||
+                  !values.end ||
+                  !values.name ||
+                  !values.description ||
+                  !values.price
+                }
+                onClick={handleSubmit}
+                type="button"
+                className="text-white w-full disabled:opacity-60 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 mr-2 mb-2"
+              >
+                Save and Continue
+              </button>
+            ) : (
+              <button
+                disabled={
+                  values.loading ||
+                  values.uploading ||
+                  !image?.data?.Location ||
+                  !values.teacher ||
+                  !values.category ||
+                  !values.duration ||
+                  !values.start ||
+                  !values.end ||
+                  !values.name ||
+                  !values.description ||
+                  !values.price
+                }
+                onClick={handleSubmit}
+                type="button"
+                className="text-white w-full disabled:opacity-60 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 mr-2 mb-2"
+              >
+                Save and Continue
+              </button>
+            )}
           </div>
         </div>
       )}

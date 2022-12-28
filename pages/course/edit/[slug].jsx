@@ -6,7 +6,11 @@ import Sidebar from "../../../components/Sidebar";
 import { useRouter } from "next/router";
 import CreateCourseForm from "../../../components/CreateCourseForm";
 import { readCourse } from "../../../lib/course";
-import { updateCourse } from "../../../lib/course";
+import {
+  updateCourse,
+  uploadImage,
+  removeImageFromEdit,
+} from "../../../lib/course";
 import LessonListUpdate from "../../../components/LessonListUpdate";
 import { removeLessonFromDb } from "../../../lib/lesson";
 import UpdateModal from "../../../components/UpdateModal";
@@ -26,6 +30,14 @@ const initalState = {
   video: {},
 };
 
+const imageInitialState = {
+  ETag: "",
+  Location: "",
+  Key: "",
+  Key: "",
+  Bucket: "",
+};
+
 const EditCourse = () => {
   const router = useRouter();
   const { user } = useSelector((state) => state);
@@ -37,13 +49,7 @@ const EditCourse = () => {
   const [visible, setVisible] = useState(false);
   const [current, setCurrent] = useState(initalState);
 
-  const [image, setImage] = useState({
-    ETag: "",
-    Location: "",
-    Key: "",
-    Key: "",
-    Bucket: "",
-  });
+  const [image, setImage] = useState(imageInitialState);
 
   const [pdf, setPdf] = useState({
     ETag: "",
@@ -94,6 +100,7 @@ const EditCourse = () => {
       uploadImage(uri)
         .then((data) => {
           setImage(data);
+          setValues((prev) => ({ ...prev, image: data }));
           console.log("response from image upload ==>", data);
           setValues({ ...values, uploading: false });
         })
@@ -151,6 +158,23 @@ const EditCourse = () => {
       });
   };
 
+  const handleRemove = async () => {
+    console.log(values.image);
+
+    setValues({ ...values, uploading: true });
+    removeImageFromEdit(values.image)
+      .then(() => {
+        setValues({ ...values, image: imageInitialState });
+        setButtonText("Upload Another Image");
+        setValues({ ...values, uploading: false });
+      })
+      .catch((error) => {
+        setValues({ ...values, uploading: false });
+        alert("failed to delete");
+        console.log(error);
+      });
+  };
+
   return (
     <AdminAndTeacher>
       <Head>
@@ -179,6 +203,7 @@ const EditCourse = () => {
                 image={image}
                 values={values}
                 editPage={true}
+                handleRemove={handleRemove}
                 handleSubmit={handleSubmit}
               />
             )}
