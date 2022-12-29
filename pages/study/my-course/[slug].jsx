@@ -21,16 +21,13 @@ const MyCourse = () => {
     const data = await readMyCourse(slug, user.id);
     if (data.ok) {
       setCurrent(data.course?.lessons[0]);
-      console.log(data);
       setCourse(data.course);
     }
-    console.log("the data ->", data);
   };
 
   useEffect(() => {
     if (slug && user && user.id) {
       loadCourse();
-      console.log(current);
     }
   }, [slug, user]);
 
@@ -45,15 +42,18 @@ const MyCourse = () => {
         <AdminNav />
         <div className="">
           <div className="container mx-auto p-8">
-            <h2 className="text-2xl text-cyan-700 font-semibold mb-3">
+            <h2 className=" text-xl sm:text-2xl text-cyan-700 font-semibold mb-3">
               You Are Learning <span className="underline">{course?.name}</span>
             </h2>
 
             <div>
-              <div className="flex justify-center items-center mb-4 mt-2">
+              <div className="flex w-full justify-center items-center mb-4 mt-2">
                 <div className="sm:w-5/6 w-full sm:h-5/6 h-60 ">
                   <ReactPlayer
                     url={current?.video?.Location}
+                    config={{
+                      file: { attributes: { controlsList: "nodownload" } },
+                    }}
                     width="100%"
                     height="100%"
                     controls
@@ -61,7 +61,7 @@ const MyCourse = () => {
                 </div>
               </div>
               <div className="flex items-center justify-between ">
-                <h2 className="text-2xl text-cyan-700 font-bold mb-2">
+                <h2 className="text-lg sm:text-2xl text-cyan-700 font-bold mb-2">
                   {current?.title}
                 </h2>
                 {current && current.pdf && current.pdf.Location && (

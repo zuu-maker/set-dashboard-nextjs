@@ -56,13 +56,14 @@ const Admin = () => {
       totalCourses: tc,
       totalPublishedCourses: tpc,
     }));
+
+    setLoading(false);
   };
 
   useEffect(() => {
     if (user && user.role === ADMIN) {
       loadData();
     }
-    setLoading(false);
   }, [user]);
 
   const loadMore = async () => {

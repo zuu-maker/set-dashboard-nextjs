@@ -23,8 +23,8 @@ const AdminNav = () => {
   };
 
   return (
-    <div className="sticky top-0 z-10">
-      <nav className="bg-white  border-gray-200  ">
+    <div className="sticky bg-red-300 w-full top-0 z-10">
+      <nav className="bg-white w-full border-gray-200  ">
         <div className="flex items-center px-4 md:px-6 py-2.5 justify-between">
           <div className="flex items-center gap-4">
             <Image src="/logo.png" width={64} height={64} className="mr-3 " />
@@ -35,7 +35,7 @@ const AdminNav = () => {
           </span>
         </div>
       </nav>
-      <nav className="bg-gray-100 ">
+      <nav className="bg-gray-100 w-full">
         <div className="py-3 px-4 md:px-6">
           <div className="flex items-center">
             <ul className="flex flex-row mt-0 mr-6 space-x-8 text-smfont-medium">

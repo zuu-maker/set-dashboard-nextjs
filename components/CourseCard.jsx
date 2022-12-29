@@ -1,6 +1,8 @@
+import { useRouter } from "next/router";
 import React from "react";
 
 const CourseCard = ({ item, handlePush }) => {
+  let router = useRouter();
   let nextPayDate = new Date(item?.nextPayDate);
   return (
     <div className="group">
