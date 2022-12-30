@@ -48,7 +48,7 @@ const MyCourse = () => {
 
             <div>
               <div className="flex w-full justify-center items-center mb-4 mt-2">
-                <div className="sm:w-5/6 w-full sm:h-5/6 h-60 ">
+                <div className="sm:w-5/6 w-full sm:h-126 h-60 ">
                   <ReactPlayer
                     url={current?.video?.Location}
                     config={{
