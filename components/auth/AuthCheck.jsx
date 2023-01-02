@@ -52,6 +52,7 @@ const AuthCheck = ({ children }) => {
           }
         });
       }
+      setLoader(false);
     });
 
     return () => unsubscribe();
