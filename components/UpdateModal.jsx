@@ -5,6 +5,7 @@ import AddLessonForm from "./AddLessonForm";
 import axios from "axios";
 import { addLesssonToDb, updateLessonInDb } from "../lib/lesson";
 import UpdateLessonForm from "./UpdateLessonForm";
+import { toast } from "react-hot-toast";
 
 const UpdateModal = ({
   visible,
@@ -18,8 +19,7 @@ const UpdateModal = ({
 }) => {
   const cancelButtonRef = useRef(null);
   const [buttonText, setButtonText] = useState("Upload Video");
-  const [buttonTextPdf, setButtonTextPdf] = useState("Upload pdf");
-  const [uploading, setUploading] = useState(false);
+  const [buttonTextPdf, setButtonTextPdf] = useState("Upload Pdf");
   const [progress, setProgress] = useState(0);
 
   const handleOnChange = (e) => {
@@ -27,12 +27,18 @@ const UpdateModal = ({
   };
 
   const handleUpdateLesson = async () => {
-    setUploading(true);
+    const toastId = toast.loading("Loading...");
+
     updateLessonInDb(slug, current)
+      .then((res) => {
+        toast.dismiss(toastId);
+
+        return res;
+      })
       .then((res) => {
         console.log("from db after update ==>", res);
         setButtonText("Upload Video");
-        alert("Lesson Updated");
+        toast.success("Lesson Updated");
 
         if (res.data.ok) {
           let arr = values.lessons;
@@ -43,10 +49,9 @@ const UpdateModal = ({
       })
       .catch((error) => {
         console.log(error);
-        alert("Error updating");
+        toast.error("Error updating");
       })
       .finally(() => {
-        setUploading(false);
         setVisible(false);
         setCurrent(initalState);
       });
@@ -62,9 +67,15 @@ const UpdateModal = ({
             pdf: current.pdf,
           }
         );
+
+        if (res.statusText !== "OK") {
+          toast.error("failed to delete PDF");
+          setButtonTextPdf("Try Again Later");
+          return;
+        }
         console.log("Deleted Video Res ==>", res);
       } catch (error) {
-        alert("Error deleting Pdf");
+        toast.error("Error deleting Pdf");
         console.log(error);
         setButtonTextPdf("Try Again Later");
         return;
@@ -73,12 +84,10 @@ const UpdateModal = ({
 
     const file = e.target.files[0];
     console.log(file);
-    setUploading(true);
 
     try {
       const formData = new FormData();
       formData.append("pdf", file);
-      console.log(formData);
 
       const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/upload-pdf`,
@@ -89,15 +98,16 @@ const UpdateModal = ({
       setCurrent((prev) => ({ ...prev, pdf: data }));
       setValues({ ...values, pdf: data });
       setButtonTextPdf(file.name);
+      toast.success("Uploaded PDF sucessfully");
     } catch (error) {
       setButtonTextPdf("Upload Another Pdf");
       console.log(error);
-      alert("failed to upload video");
+      toast.error("failed to upload video");
     }
-    setUploading(false);
   };
 
   const handleVideo = async (e) => {
+    setButtonText("Uploading...");
     if (current.video && current.video.Location) {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/remove-video`,
@@ -107,7 +117,9 @@ const UpdateModal = ({
       );
 
       if (res.statusText !== "OK") {
-        alert("Error deleting Video");
+        toast.error("Error deleting Video");
+        setButtonText("Try Again");
+
         console.log(res);
         return;
       }
@@ -115,9 +127,6 @@ const UpdateModal = ({
     }
 
     const file = e.target.files[0];
-    console.log(file);
-    setButtonText(file.name);
-    setUploading(true);
 
     const videoData = new FormData();
     videoData.append("video", file);
@@ -133,9 +142,9 @@ const UpdateModal = ({
       }
     );
 
-    setUploading(false);
-    setButtonText("Upload Another Video");
-    console.log(data);
+    setButtonText("Change Video");
+    setProgress(0);
+    toast.success("Video uploaded sucessfully");
     setCurrent((prev) => ({ ...prev, video: data }));
   };
 
@@ -186,7 +195,6 @@ const UpdateModal = ({
                 <div className="px-10">
                   <UpdateLessonForm
                     current={current}
-                    uploading={uploading}
                     handleOnChange={handleOnChange}
                     handleVideo={handleVideo}
                     buttonText={buttonText}
@@ -197,8 +205,9 @@ const UpdateModal = ({
                 </div>
                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                   <button
+                    disabled={!current?.title || !current?.content}
                     type="button"
-                    className="inline-flex w-full justify-center rounded-md border border-transparent text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 px-4 py-2 text-base font-medium shadow-sm hover:bg-gradient-to-br focus:outline-none focus:ring-teal-300 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="inline-flex disabled:opacity-60 w-full justify-center rounded-md border border-transparent text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 px-4 py-2 text-base font-medium shadow-sm hover:bg-gradient-to-br focus:outline-none focus:ring-teal-300 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={handleUpdateLesson}
                   >
                     Save
@@ -210,6 +219,7 @@ const UpdateModal = ({
                     onClick={() => {
                       setVisible(false);
                       setButtonText("Upload Video");
+                      setButtonTextPdf("Upload PDF");
                     }}
                     ref={cancelButtonRef}
                   >

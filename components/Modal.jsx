@@ -4,6 +4,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import AddLessonForm from "./AddLessonForm";
 import axios from "axios";
 import { addLesssonToDb } from "../lib/lesson";
+import { toast } from "react-hot-toast";
 
 const Modal = ({ visible, setVisible, setCourse, slug, loadCourse }) => {
   const cancelButtonRef = useRef(null);
@@ -39,12 +40,12 @@ const Modal = ({ visible, setVisible, setCourse, slug, loadCourse }) => {
         setButtonText("Upload Video");
         setButtonTextPdf("Upload Pdf");
         setCourse(data);
-        alert("Lesson Has Been Added");
+        toast.success("Lesson Has Been Added");
         loadCourse();
       })
       .catch((error) => {
         console.log(error);
-        alert("Failed to Add lesson");
+        toast.error("Failed to Add lesson");
       });
   };
 
@@ -79,7 +80,7 @@ const Modal = ({ visible, setVisible, setCourse, slug, loadCourse }) => {
       setUploading(false);
       setButtonText("Upload Video");
       console.log(error);
-      alert("failed to upload video");
+      toast.error("failed to upload video");
     }
   };
 
@@ -103,9 +104,9 @@ const Modal = ({ visible, setVisible, setCourse, slug, loadCourse }) => {
       setValues({ ...values, pdf: data });
       setButtonTextPdf(file.name);
     } catch (error) {
-      setButtonTextPdf("Upload Another Pdf");
+      setButtonTextPdf("Upload Another PDF");
       console.log(error);
-      alert("failed to upload video");
+      toast.error("failed to upload PDF");
     }
     setUploading(false);
   };
@@ -122,10 +123,10 @@ const Modal = ({ visible, setVisible, setCourse, slug, loadCourse }) => {
       console.log(data);
       setValues({ ...values, video: null });
       setButtonText("Upload Another Video");
-      alert("video removed");
+      toast.success("video removed");
     } catch (err) {
       console.log(err);
-      alert("failed to remove video");
+      toast.error("failed to remove video");
     }
   };
 
@@ -188,8 +189,9 @@ const Modal = ({ visible, setVisible, setCourse, slug, loadCourse }) => {
                 </div>
                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                   <button
+                    disabled={!values.title || !values.content}
                     type="button"
-                    className="inline-flex w-full justify-center rounded-md border border-transparent text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 px-4 py-2 text-base font-medium shadow-sm hover:bg-gradient-to-br focus:outline-none focus:ring-teal-300 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="inline-flex disabled:opacity-60 w-full justify-center rounded-md border border-transparent text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 px-4 py-2 text-base font-medium shadow-sm hover:bg-gradient-to-br focus:outline-none focus:ring-teal-300 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={handleAddLesson}
                   >
                     Save

@@ -20,6 +20,7 @@ import Resizer from "react-image-file-resizer";
 
 import { ADMIN } from "../../../features/userSlice";
 import AdminAndTeacher from "../../../components/routes/AdminAndTeacher";
+import { toast } from "react-hot-toast";
 
 const initalState = {
   _id: "",
@@ -28,6 +29,7 @@ const initalState = {
   content: "",
   slug: "",
   video: {},
+  pdf: {},
 };
 
 const imageInitialState = {
@@ -51,15 +53,7 @@ const EditCourse = () => {
 
   const [image, setImage] = useState(imageInitialState);
 
-  const [pdf, setPdf] = useState({
-    ETag: "",
-    Location: "",
-    Key: "",
-    Key: "",
-    Bucket: "",
-  });
-
-  const [values, setValues] = useState();
+  const [values, setValues] = useState(null);
 
   const loadCourse = async () => {
     if (slug) {
@@ -90,36 +84,56 @@ const EditCourse = () => {
   };
 
   const handleImage = (e) => {
-    setValues({ ...values, uploading: true });
+    setButtonText("Uploading...");
+
+    if (values && values.image && values.image.Location) {
+      removeImageFromEdit(values.image)
+        .then(() => {
+          setValues({ ...values, image: imageInitialState });
+          setButtonText("Upload Another Image");
+        })
+        .catch((error) => {
+          setButtonText("Try again");
+          toast.error("failed to delete");
+          console.log(error);
+          return;
+        });
+    }
+
     let file = e.target.files[0];
 
     setPreview(window.URL.createObjectURL(file));
-    setButtonText(file.name);
 
     Resizer.imageFileResizer(file, 720, 500, "JPEG", 100, 0, async (uri) => {
       uploadImage(uri)
         .then((data) => {
           setImage(data);
           setValues((prev) => ({ ...prev, image: data }));
+          setButtonText(file.name);
           console.log("response from image upload ==>", data);
-          setValues({ ...values, uploading: false });
+          toast.success("Image uploaded successfully");
         })
         .catch((err) => {
           console.log(err);
-          setValues({ ...values, loading: false });
+          toast.error("Failed to upload image");
+          setButtonText("Try again");
         });
     });
   };
 
   // new code
   const removeLesson = async (index) => {
+    //confirm boolean
     let answer = window.confirm("Are you sure you want to delete the lesson?");
     if (!answer) return;
 
+    //declerations and state management
+    const toastId = toast.loading("Adding teacher...");
     let _lessons = values.lessons;
     let remove = _lessons.splice(index, 1);
     setValues((prev) => ({ ...prev, lessons: _lessons }));
 
+    //remove video
     if (remove && remove[0].video && remove[0].video.Location) {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/remove-video`,
@@ -129,32 +143,61 @@ const EditCourse = () => {
       );
 
       if (res.statusText !== "OK") {
-        alert("Error handling video");
+        toast.error("Error deleting video");
         console.log(res);
         return;
       }
-      console.log("Deleted Video Res ==>", res);
     }
 
+    //remove pdf
+    if (remove && remove[0].pdf && remove[0].pdf.Location) {
+      try {
+        const res = await axios.post(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/remove-pdf`,
+          {
+            pdf: remove[0].pdf,
+          }
+        );
+
+        if (res.statusText !== "OK") {
+          toast.error("Error deleting PDF");
+          console.log(res);
+          return;
+        }
+        console.log("Deleted Video Res ==>", res);
+      } catch (error) {
+        toast.error("Error deleting Pdf");
+        console.log(error);
+        return;
+      }
+    }
+
+    //remove data from db
     removeLessonFromDb(slug, remove)
       .then((res) => {
+        toast.dismiss(toastId);
+
+        return res;
+      })
+      .then((res) => {
         console.log("Lesson delete ==>", res);
+        toast.success("lesson deleted successfully");
       })
       .catch((error) => {
         console.log(error);
-        alert("error failed to delete");
+        toast.error("error failed to delete");
       });
   };
 
   const handleSubmit = () => {
     updateCourse(values, image, slug)
       .then(() => {
-        alert("Course Update Successful");
+        toast.success("Course Update Successful");
         router.push("/course");
       })
       .catch((error) => {
         console.log(error);
-        alert("failed to update");
+        toast.error("failed to update");
       });
   };
 
@@ -170,7 +213,7 @@ const EditCourse = () => {
       })
       .catch((error) => {
         setValues({ ...values, uploading: false });
-        alert("failed to delete");
+        toast.error("failed to delete");
         console.log(error);
       });
   };

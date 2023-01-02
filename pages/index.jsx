@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import StudentRoute from "../components/routes/StudentRoute";
 import CourseCard from "../components/CourseCard";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const Home = () => {
   const { user } = useSelector((state) => state);
@@ -37,6 +38,7 @@ const Home = () => {
       }
     } catch (error) {
       console.log(error);
+      toast.error("can not create payment token");
     }
   };
 

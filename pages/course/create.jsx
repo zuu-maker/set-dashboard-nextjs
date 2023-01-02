@@ -6,6 +6,7 @@ import Sidebar from "../../components/Sidebar";
 import CreateCourseForm from "../../components/CreateCourseForm";
 import { createCourse, removeImage, uploadImage } from "../../lib/course";
 import AdminRoute from "../../components/routes/AdminRoute";
+import { toast } from "react-hot-toast";
 /* 
   1.finish image upload - done
   2.push to aws - done
@@ -46,20 +47,28 @@ const CreateCourse = () => {
     console.log(values, "image ==>", image);
 
     if (!image?.data?.Location) {
-      alert("please uplaod an image!!");
+      toast.error("please uplaod an image!!");
       return;
     }
 
+    const toastId = toast.loading("Adding course...");
+
     createCourse(values, image)
+      .then((res) => {
+        toast.dismiss(toastId);
+
+        return res;
+      })
       .then((res) => {
         setValues(initialValues);
         setImage(initialImage);
         setPreview("");
         setButtonText("Upload Image");
-        alert("course created successfully");
+        toast.success("Course created successfully");
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Failed to add course");
       });
   };
 
@@ -76,12 +85,11 @@ const CreateCourse = () => {
       uploadImage(uri)
         .then((data) => {
           setImage(data);
-          console.log("response from image upload==>", data);
           setValues({ ...values, uploading: false });
         })
         .catch((err) => {
           console.log(err);
-          alert("upload failed");
+          toast.err("upload failed");
           setValues({ ...values, loading: false });
         });
     });
@@ -98,7 +106,7 @@ const CreateCourse = () => {
       })
       .catch((error) => {
         setValues({ ...values, uploading: false });
-        alert("failed to delete");
+        toast.error("failed to delete");
         console.log(error);
       });
   };

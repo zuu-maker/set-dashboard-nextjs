@@ -5,6 +5,7 @@ import AdminNav from "../components/AdminNav";
 import { auth } from "../firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { useSelector } from "react-redux";
+import { toast } from "react-hot-toast";
 
 const ResetPwd = () => {
   const [email, setEmail] = useState("");
@@ -18,12 +19,12 @@ const ResetPwd = () => {
       .then(() => {
         setEmail("");
         setLoading(false);
-        alert("Email reset has been sent");
+        toast.success("Email reset has been sent to " + email);
       })
       .catch((error) => {
         console.log(error);
         setLoading(false);
-        alert("Email reset has been sent");
+        toast.error("Failed to send email reset.");
       });
   };
 

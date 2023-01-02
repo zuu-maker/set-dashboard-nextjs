@@ -1,11 +1,14 @@
 import axios from "axios";
 import React from "react";
+import { toast } from "react-hot-toast";
 import Bin from "../util/Bin";
 
 const TableElementTeacher = ({ teacher, n }) => {
   const deleteTeacher = async () => {
     let answer = window.confirm(
-      "Are you sure you want to permanetly delete " + teacher.name + "?"
+      "Are you sure you want to permanetly delete " +
+        teacher.name +
+        "? Please ensure all of the teacher's courses have been reassigned"
     );
     if (answer) {
       alert(
@@ -19,10 +22,10 @@ const TableElementTeacher = ({ teacher, n }) => {
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/delete-teacher/${teacher._id}`
         );
         if (data.ok) {
-          alert("delete");
+          toast.success("Teacher deleted");
           return;
         }
-        alert("failed to delete");
+        toast.error("failed to delete");
       }
     }
   };

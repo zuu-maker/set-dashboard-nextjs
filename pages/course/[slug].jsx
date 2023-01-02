@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 
 import { TEACHER, ADMIN } from "../../features/userSlice";
 import AdminAndTeacher from "../../components/routes/AdminAndTeacher";
+import { toast } from "react-hot-toast";
 
 const CourseView = () => {
   const router = useRouter();
@@ -57,11 +58,11 @@ const CourseView = () => {
     publishToDb(course._id)
       .then((res) => {
         setCourse(res.data);
-        alert("Course is now live!!");
+        toast.success("Course is now live!!");
       })
       .catch((error) => {
         console.log(error);
-        alert("Oops failed to publish");
+        toast.error("Oops failed to publish");
       });
     console.log(id);
   };
@@ -75,11 +76,11 @@ const CourseView = () => {
     unPublishFromDb(course._id)
       .then((res) => {
         setCourse(res.data);
-        alert("Course has been successfully unpublished");
+        toast.success("Course has been successfully unpublished");
       })
       .catch((error) => {
         console.log(error);
-        alert("Sorry failed to unpublished");
+        toast.error("Sorry failed to unpublished");
       });
     console.log(id);
   };

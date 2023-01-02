@@ -5,6 +5,8 @@ import AdminNav from "../components/AdminNav";
 import CreateUserForm from "../components/CreateUserForm";
 import axios from "axios";
 import AdminRoute from "../components/routes/AdminRoute";
+import { toast } from "react-hot-toast";
+import validator from "email-validator";
 
 const initialValues = {
   name: "",
@@ -13,8 +15,6 @@ const initialValues = {
   phone: "",
   city: "",
   role: "Teacher",
-  uploading: false,
-  loading: false,
 };
 
 const CreateUser = () => {
@@ -24,7 +24,7 @@ const CreateUser = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const { phone } = values;
+  const { phone, email } = values;
 
   const createUserInDb = async () => {
     return await axios.post(
@@ -34,19 +34,32 @@ const CreateUser = () => {
   };
 
   const handleSubmit = () => {
-    if (phone.length !== 10) {
-      alert("Invalid Phone Number");
+    if (!validator.validate(email)) {
+      toast.error("Invalid email Format");
       return;
     }
 
+    if (phone.length !== 10) {
+      toast.error("Invalid Zambian Number");
+      return;
+    }
+    const toastId = toast.loading("Adding teacher...");
+
     createUserInDb()
       .then((res) => {
+        toast.dismiss(toastId);
+
+        return res;
+      })
+      .then((res) => {
         setValues(initialValues);
-        alert("User Added to db, please add user to firebase authentication");
+        toast.success(
+          "User Added to db, please add user to firebase authentication"
+        );
       })
       .catch((err) => {
         console.log("failed to created in db ==>", err);
-        alert("All fields are required");
+        toast.error("All fields are required");
       });
   };
 

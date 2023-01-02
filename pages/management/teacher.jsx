@@ -36,7 +36,7 @@ const TeacherView = () => {
             <Sidebar />
           </div>
           <div className="basis-5/6 p-8">
-            <h2 className="text-2xl font-semibold mb-3">Manage Teahers</h2>
+            <h2 className="text-2xl font-semibold mb-3">Manage Teachers</h2>
             <TeacherTable thead={tableHead} data={teachers} isTeacher={true} />
             {teachers?.length >= 10 && (
               <button

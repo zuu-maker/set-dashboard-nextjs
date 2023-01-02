@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 
 import { updateCategory, readCategory } from "../../lib/category";
 import AdminRoute from "../../components/routes/AdminRoute";
+import { toast } from "react-hot-toast";
 
 const CategoryEdit = () => {
   const router = useRouter();
@@ -31,15 +32,21 @@ const CategoryEdit = () => {
   }, [slug]);
 
   const handleSubmit = () => {
-    setLoading(true);
+    const toastId = toast.loading("Loading...");
+
     updateCategory(name, slug)
       .then((res) => {
+        toast.dismiss(toastId);
+
+        return res;
+      })
+      .then((res) => {
         setLoading(false);
-        alert("Category Updated");
+        toast.success("Category Updated");
       })
       .catch((err) => {
         console.log(err);
-        alert("Failed to update");
+        toast.error("Failed to update");
         setLoading(false);
       });
   };

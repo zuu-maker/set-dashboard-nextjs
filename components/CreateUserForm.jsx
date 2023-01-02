@@ -4,6 +4,7 @@ import OpenEye from "./util/OpenEye";
 
 const CreateUserForm = ({ values, handleChange, handleSubmit }) => {
   const [showPassword, setShowPassword] = useState(false);
+
   return (
     <div>
       {values && (
@@ -82,10 +83,12 @@ const CreateUserForm = ({ values, handleChange, handleSubmit }) => {
             </div>
 
             <button
-              disabled={values.loading || values.uploading}
+              disabled={
+                !values.email || !values.name || !values.city || !values.phone
+              }
               onClick={handleSubmit}
               type="button"
-              className="text-white w-full bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium rounded-lg text-sm px-5 py-4 text-center mt-2 mr-2 mb-2"
+              className="text-white disabled:opacity-60 w-full bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium rounded-lg text-sm px-5 py-4 text-center mt-2 mr-2 mb-2"
             >
               Add User
             </button>

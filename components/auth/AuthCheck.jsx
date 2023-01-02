@@ -41,15 +41,17 @@ const AuthCheck = ({ children }) => {
                     isVerified: _user.emailVerified,
                   })
                 );
+                setLoader(false);
               })
               .catch((err) => {
                 console.log(err);
+                setLoader(false);
+
                 alert(err);
               });
           }
         });
       }
-      setLoader(false);
     });
 
     return () => unsubscribe();

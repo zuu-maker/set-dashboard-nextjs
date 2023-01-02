@@ -5,14 +5,13 @@ import { Line } from "rc-progress";
 const UpdateLessonForm = ({
   current,
   handleOnChange,
-  uploading,
   handleVideo,
   buttonText,
   buttonTextPdf,
   progress,
   handlePdf,
 }) => {
-  const { title, content, pdf } = current;
+  const { title, content } = current;
   return (
     <div className=" text-sm text-gray-500">
       <form className="">
@@ -32,8 +31,10 @@ const UpdateLessonForm = ({
           className="mt-1 px-1 block w-full border-2 border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm"
           placeholder="Content"
         />
+
+        {/* video display */}
         <div className="flex flex-col items-center gap-5 mt-3">
-          {!uploading && current?.video && current.video.Location && (
+          {current?.video && current.video.Location && (
             <ReactPlayer
               url={current.video.Location}
               width="410px"
@@ -42,32 +43,39 @@ const UpdateLessonForm = ({
             />
           )}
 
+          {/* video update handler */}
           <label className="text-white  flex cursor-pointer justify-center items-center w-full bg-gradient-to-r flex-grow from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium text-sm px-5 py-2.5 text-center">
             {buttonText}
             <input
               hidden
               type="file"
-              name="image"
+              name="video"
               onChange={handleVideo}
               accept="video/*"
             />
           </label>
         </div>
 
+        {/* progress bar */}
         <div className="mt-2">
           {progress > 0 && (
             <Line percent={progress} strokeWidth={4} strokeColor="#0000FF" />
           )}
         </div>
+
+        {/* PDF location */}
         <div className="flex px-3 justify-between items-center">
-          <a
-            className="font-md flex-grow text-lg text-cyan-600 dark:text-cyan-500 hover:underline"
-            target="_blank"
-            href={pdf?.Location}
-            rel="noopener noreferrer"
-          >
-            link to pdf
-          </a>
+          {current?.pdf && current.pdf.Location && (
+            <a
+              className="font-md flex-grow text-lg text-cyan-600 dark:text-cyan-500 hover:underline"
+              target="_blank"
+              href={current.pdf.Location}
+              rel="noopener noreferrer"
+            >
+              link to pdf
+            </a>
+          )}
+
           <label className="text-white mt-2 flex cursor-pointer justify-center items-center  bg-gradient-to-r f from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium text-sm px-5 py-2.5 text-center">
             {buttonTextPdf}
             <input
@@ -77,6 +85,7 @@ const UpdateLessonForm = ({
               accept="application/pdf"
             />
           </label>
+
           {/* <button onClick={handlePdf} className="text-white  flex cursor-pointer justify-center items-center  bg-gradient-to-r  from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium text-sm px-5 py-2.5 text-center">
             {buttonTextPdf}
           </button> */}

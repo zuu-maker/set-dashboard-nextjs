@@ -11,6 +11,7 @@ import {
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const Login = () => {
     email.toLowerCase();
 
     if (!email || !password) {
-      alert("Email and password can't be empty");
+      toast.error("Email and password can't be empty");
     }
 
     signInWithEmailAndPassword(
@@ -57,7 +58,7 @@ const Login = () => {
             if (!userCredentials.user.emailVerified) {
               sendEmailVerification(userCredentials.user)
                 .then(() => {
-                  alert(
+                  toast.success(
                     `Email Verification link has been sent to" "${userCredentials.user.email}, please check your span folder and other related folders.`
                   );
                 })

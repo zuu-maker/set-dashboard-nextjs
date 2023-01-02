@@ -164,7 +164,7 @@ const CreateCourseForm = ({
                 </select> */}
             <div className="flex space-x-3">
               <label className="text-white flex justify-center h-14 items-center w-full bg-gradient-to-r flex-grow from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                {values.uploading ? "Uploading..." : buttonText}
+                {buttonText}
                 <input
                   hidden
                   type="file"
@@ -181,12 +181,6 @@ const CreateCourseForm = ({
                     className="w-16 h-14 rounded"
                     alt=""
                   />
-                  <div
-                    onClick={handleRemove}
-                    className="inline-flex absolute cursor-pointer -top-2 -right-2 justify-center items-center w-7 h-7 text-md font-bold text-white bg-red-500 rounded-full border-2 border-white "
-                  >
-                    x
-                  </div>
                 </div>
               )}
 

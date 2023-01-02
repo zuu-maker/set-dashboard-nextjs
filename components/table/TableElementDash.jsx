@@ -1,6 +1,7 @@
 import React from "react";
 
 const TransactionElement = ({ el }) => {
+  let date = new Date(el?.createdAt);
   return (
     <tr className="border-b border-gray-200 hover:bg-gray-100">
       <td className="py-3 px-6 text-left whitespace-nowrap">
@@ -27,7 +28,9 @@ const TransactionElement = ({ el }) => {
       </td>
       <td className="py-3 px-6 text-left">
         <span className="text-lg font-semibold">
-          {el && el.createdAt.split("T")[0]}
+          {el &&
+            el.createdAt &&
+            date.toDateString() + " " + date.toLocaleTimeString()}
         </span>
       </td>
       <td className="py-3 px-6 text-left">

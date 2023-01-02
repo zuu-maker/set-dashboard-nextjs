@@ -1,9 +1,12 @@
-import React from "react";
+import React, { forwardRef } from "react";
 
-const OrderItem = ({ order, verify }) => {
+const OrderItem = forwardRef(({ order, verify }, ref) => {
   let date = new Date(order?.createdAt);
   return (
-    <div className=" mb-16 flex h-52 w-full sm:w-[780px] flex-col bg-white font-serif text-black shadow-xl">
+    <div
+      ref={ref}
+      className=" mb-16 flex h-52 w-full sm:w-[780px] flex-col bg-white font-serif text-black shadow-xl"
+    >
       <div className="mt-4">
         <h1 className="sm:mx-11 my-1 font-bold text-[16px] sm:text-[20px] text-gray-600">
           Id:{" " + order?._id}
@@ -51,6 +54,6 @@ const OrderItem = ({ order, verify }) => {
       </div>
     </div>
   );
-};
+});
 
 export default OrderItem;

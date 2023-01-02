@@ -15,6 +15,7 @@ import { totalTeachers } from "../lib/teacher";
 import { readOrders } from "../lib/order";
 import Loader from "../components/util/Loader";
 import AdminRoute from "../components/routes/AdminRoute";
+import ChartData from "../components/ChartData";
 
 const tableHead = [
   "Name",
@@ -118,6 +119,15 @@ const Admin = () => {
 
               <div>
                 <div className="md:col-span-2 pt-5 xl:col-span-3">
+                  <h3 className="text-xl font-semibold">Chart Data</h3>
+                  <div className="w-full">
+                    <ChartData />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div className="md:col-span-2 pt-5 xl:col-span-3">
                   <h3 className="text-xl font-semibold">
                     15 of the recent Transactions
                   </h3>
@@ -132,6 +142,7 @@ const Admin = () => {
                   </div>
                 </div>
               </div>
+
               {orders?.length >= 15 && (
                 <button
                   onClick={loadMore}

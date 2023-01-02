@@ -3,11 +3,12 @@ import Head from "next/head";
 import Sidebar from "../../components/Sidebar";
 import StudentRole from "../../components/table/StudentRole";
 import { useEffect } from "react";
-import { readSubs } from "../../lib/student";
+import { readSubs, totalStudents } from "../../lib/student";
 import AdminNav from "../../components/AdminNav";
 import AdminRoute from "../../components/routes/AdminRoute";
 import { CSVLink } from "react-csv";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const headers = [
   { label: "Name", key: "name" },
@@ -21,6 +22,23 @@ const allStudents = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
+  const [fileNmae, setFileName] = useState("");
+
+  useEffect(() => {
+    let todaysDate = new Date();
+    let month = todaysDate.getMonth() + 1;
+
+    let date =
+      todaysDate.getDate().toString() +
+      "/" +
+      month.toString() +
+      "/" +
+      todaysDate.getFullYear().toString();
+
+    let _fileName = "signed-up" + "-" + date + ".csv";
+    setFileName(_fileName);
+    console.log(_fileName);
+  }, []);
 
   const loadSubs = async () => {
     const _subs = await readSubs(page);
@@ -41,10 +59,11 @@ const allStudents = () => {
       setData(data);
       console.log(data);
       setLoading(false);
+      toast.success("You proceed to download Data");
     } catch (error) {
       setLoading(false);
       console.log(error);
-      alert("failed to get users");
+      toast.error("failed to get users");
     }
   };
 
@@ -105,7 +124,7 @@ const allStudents = () => {
             <div className="flex items-center justify-between w-full px-5">
               {data.length > 0 ? (
                 <CSVLink
-                  filename={"not-subscribed.csv"}
+                  filename={fileNmae}
                   headers={headers}
                   data={data}
                   className="text-white bg-gradient-to-r from-green-500 via-green-600 to-green-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 mr-2 mb-2"

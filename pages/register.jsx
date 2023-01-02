@@ -11,6 +11,8 @@ import {
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
+import { toast } from "react-hot-toast";
+import validator from "email-validator";
 
 const register = () => {
   const dispatch = useDispatch();
@@ -51,8 +53,14 @@ const register = () => {
     setLoading(true);
     email.toLowerCase();
 
+    if (!validator.validate(email)) {
+      setError("Invalid email Format");
+      return;
+    }
+
     if (!email || !password || !name || !city || !phone) {
       setError("Please fill in every field");
+      return;
     }
 
     createUserWithEmailAndPassword(
@@ -66,7 +74,7 @@ const register = () => {
             if (!userCredentials.user.emailVerified) {
               sendEmailVerification(userCredentials.user)
                 .then(() => {
-                  alert(
+                  toast.success(
                     `Email Verification link has been sent to${userCredentials.user.email}`
                   );
                 })

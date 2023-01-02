@@ -3,6 +3,7 @@ import Bin from "../util/Bin";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { ADMIN } from "../../features/userSlice";
+import { toast } from "react-hot-toast";
 
 const TableElementStudent = ({ student }) => {
   const { user } = useSelector((state) => state);
@@ -17,10 +18,10 @@ const TableElementStudent = ({ student }) => {
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/delete-user/${student._id}`
         );
         if (data.ok) {
-          alert("delete");
+          toast.success("Deleted Sucessfully");
           return;
         }
-        alert("failed to delete");
+        toast.error("failed to delete");
       }
     }
   };

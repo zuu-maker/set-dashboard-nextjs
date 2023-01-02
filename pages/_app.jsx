@@ -2,11 +2,29 @@ import "../styles/globals.css";
 import { Provider } from "react-redux";
 import { store } from "../app/store";
 import AuthCheck from "../components/auth/AuthCheck";
+import { toast, Toaster } from "react-hot-toast";
 
 function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <AuthCheck>
+        <div>
+          <Toaster
+            position="top-left"
+            reverseOrder={false}
+            toastOptions={{
+              loading: {
+                className: "",
+                duration: 5000,
+                style: {
+                  background: "#2563eb",
+                  height: 48,
+                  color: "#ffffff",
+                },
+              },
+            }}
+          />
+        </div>
         <Component {...pageProps} />
       </AuthCheck>
     </Provider>
