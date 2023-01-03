@@ -84,7 +84,7 @@ const EditCourse = () => {
   };
 
   const handleImage = (e) => {
-    setButtonText("Uploading...");
+    setButtonText("working on it...");
 
     if (values && values.image && values.image.Location) {
       removeImageFromEdit(values.image)
@@ -106,11 +106,11 @@ const EditCourse = () => {
 
     Resizer.imageFileResizer(file, 720, 500, "JPEG", 100, 0, async (uri) => {
       uploadImage(uri)
-        .then((data) => {
-          setImage(data);
-          setValues((prev) => ({ ...prev, image: data }));
+        .then((res) => {
+          setImage(res);
+          setValues((prev) => ({ ...prev, image: res.data }));
           setButtonText(file.name);
-          console.log("response from image upload ==>", data);
+          console.log("response from image upload ==>", res.data);
           toast.success("Image uploaded successfully");
         })
         .catch((err) => {

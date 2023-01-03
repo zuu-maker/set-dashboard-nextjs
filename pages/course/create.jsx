@@ -73,6 +73,7 @@ const CreateCourse = () => {
   };
 
   const handleImage = (e) => {
+    setButtonText("Uploading...");
     setValues({ ...values, uploading: true });
     let file = e.target.files[0];
 
@@ -86,25 +87,29 @@ const CreateCourse = () => {
         .then((data) => {
           setImage(data);
           setValues({ ...values, uploading: false });
+          toast.success("uploaded sucessfully");
         })
         .catch((err) => {
           console.log(err);
-          toast.err("upload failed");
+          toast.error("upload failed");
           setValues({ ...values, loading: false });
         });
     });
   };
 
   const handleRemove = async () => {
+    setButtonText("Uploading...");
     setValues({ ...values, uploading: true });
     removeImage(image)
       .then(() => {
         setImage({});
         setPreview("");
         setButtonText("Upload Another Image");
+        toast.success("Image Deleted");
         setValues({ ...values, uploading: false });
       })
       .catch((error) => {
+        setButtonText("Try again");
         setValues({ ...values, uploading: false });
         toast.error("failed to delete");
         console.log(error);
