@@ -6,15 +6,23 @@ import { logOutUser } from "../features/userSlice";
 import { auth } from "../firebase";
 import { ADMIN } from "../features/userSlice";
 import Router from "next/router";
+import axios from "axios";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state);
 
   const handleSignOut = async () => {
-    Router.push("/login");
-    await signOut(auth);
-    dispatch(logOutUser());
+    try {
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/logged-out/${user.id}`
+      );
+      await signOut(auth);
+      dispatch(logOutUser());
+      Router.push("/login");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

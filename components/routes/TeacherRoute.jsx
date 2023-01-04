@@ -13,6 +13,8 @@ const TeacherRoute = ({ children }) => {
       setShow(true);
     } else if (user && user.role === "Student") {
       router.push("/");
+    } else if (user && user.role === "Admin") {
+      router.push("/admin");
     }
   }, [user]);
 

@@ -7,6 +7,7 @@ import { setUser } from "../features/userSlice";
 import {
   sendEmailVerification,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -42,6 +43,7 @@ const Login = () => {
     setDisable(true);
     setLoading(true);
     email.toLowerCase();
+    let signedIn = true;
 
     if (!email || !password) {
       toast.error("Email and password can't be empty");
@@ -67,30 +69,43 @@ const Login = () => {
                 });
             }
             getCurrentUser(idToken, userCredentials.user.email)
-              .then((res) => {
-                dispatch(
-                  setUser({
-                    id: res.data._id,
-                    name: res.data.name,
-                    email: res.data.email,
-                    token: idToken,
-                    role: res.data.role,
-                    isVerified: userCredentials.user.emailVerified,
-                  })
-                );
-                if (res.data.role === "Admin") {
-                  router.push("/admin");
-                  setDisable(false);
-                  setLoading(false);
-                } else if (res.data.role === "Student") {
-                  console.log("Push to home");
-                  router.push("/");
+              .then(async (res) => {
+                if (res.data.loggedIn) {
+                  await signOut(auth);
+                  toast.error(
+                    "Oops you can only be logged into one device at a time, please logout of your other device."
+                  );
                   setDisable(false);
                   setLoading(false);
                 } else {
-                  router.push(`/courses/${res.data._id}`);
-                  setDisable(false);
-                  setLoading(false);
+                  await axios.put(
+                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/logged-in/${res.data._id}`
+                  );
+                  dispatch(
+                    setUser({
+                      id: res.data._id,
+                      name: res.data.name,
+                      email: res.data.email,
+                      token: idToken,
+                      role: res.data.role,
+                      isVerified: userCredentials.user.emailVerified,
+                    })
+                  );
+                  if (res.data.role === "Admin") {
+                    router.push("/admin");
+                    setDisable(false);
+                    setLoading(false);
+                  } else if (res.data.role === "Student") {
+                    console.log("Push to home");
+                    router.push("/");
+                    setDisable(false);
+                    setLoading(false);
+                  } else {
+                    router.push(`/courses/${res.data._id}`);
+                    setDisable(false);
+                    setLoading(false);
+                  }
+                  //change signed in to true
                 }
               })
               .catch((err) => {

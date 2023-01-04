@@ -6,6 +6,7 @@ import { auth } from "../firebase";
 import { logOutUser } from "../features/userSlice";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 const AdminNav = () => {
   const user = useSelector((state) => state.user);
@@ -16,9 +17,17 @@ const AdminNav = () => {
     let answer = window.confirm("Are you sure you want to log out?");
 
     if (answer) {
-      await signOut(auth);
-      dispatch(logOutUser());
-      router.push("/login");
+      try {
+        //setUser signedIn back to false
+        await axios.put(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/logged-out/${user.id}`
+        );
+        await signOut(auth);
+        dispatch(logOutUser());
+        router.push("/login");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 

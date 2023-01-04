@@ -7,7 +7,7 @@ const TransactionElement = ({ el }) => {
       <td className="py-3 px-6 text-left whitespace-nowrap">
         <div className="flex items-center">
           <div className="mr-2"></div>
-          <span className="text-lg font-semibold">{el && el.userId.name}</span>
+          <span className="text-lg font-semibold">{el && el.userId?.name}</span>
         </div>
       </td>
       <td className="py-3 px-6">
@@ -18,13 +18,13 @@ const TransactionElement = ({ el }) => {
         </div>
       </td>
       <td className="py-3 px-6 text-left">
-        <span className="text-lg font-semibold">{el && el.userId.phone}</span>
+        <span className="text-lg font-semibold">{el && el.userId?.phone}</span>
       </td>
       <td className="py-3 px-6 text-left">
-        <span className="text-lg font-semibold">{el && el.userId.email}</span>
+        <span className="text-lg font-semibold">{el && el.userId?.email}</span>
       </td>
       <td className="py-3 px-6 text-left">
-        <span className="text-lg font-semibold">{el && el.userId.city}</span>
+        <span className="text-lg font-semibold">{el && el.userId?.city}</span>
       </td>
       <td className="py-3 px-6 text-left">
         <span className="text-lg font-semibold">

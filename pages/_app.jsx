@@ -22,6 +22,10 @@ function MyApp({ Component, pageProps }) {
                   color: "#ffffff",
                 },
               },
+
+              error: {
+                duration: 5000,
+              },
             }}
           />
         </div>

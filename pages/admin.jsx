@@ -16,6 +16,7 @@ import { readOrders } from "../lib/order";
 import Loader from "../components/util/Loader";
 import AdminRoute from "../components/routes/AdminRoute";
 import ChartData from "../components/ChartData";
+import axios from "axios";
 
 const tableHead = [
   "Name",
@@ -34,29 +35,51 @@ const Admin = () => {
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState(null);
   const [page, setPage] = useState(1);
+  const [bar, setBar] = useState([]);
   const [data, setData] = useState({
     teachers: 0,
     students: 0,
     totalCourses: 0,
     totalPublishedCourses: 0,
+    pieChartData: [],
   });
 
   const loadData = async () => {
-    const tc = await totalCoursesFromDb();
-    const tpc = await totalPublishedFromDb();
-    const ts = await totalStudents();
-    const tt = await totalTeachers();
+    axios
+      .all([
+        axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/total-students`),
+        axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/total-teachers`),
+        axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/total-courses`),
+        axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/total-published-courses`
+        ),
+        axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/get-by-month`),
+        axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/subscription-chart-data`
+        ),
+      ])
+      .then(
+        axios.spread((res1, res2, res3, res4, res5, res6) => {
+          setData((prev) => ({
+            ...prev,
+            students: res1.data,
+            teachers: res2.data,
+            totalCourses: res3.data,
+            totalPublishedCourses: res4.data,
+            pieChartData: res6.data,
+          }));
+
+          setBar(res5.data);
+        })
+      );
+
+    // const tc = await totalCoursesFromDb();
+    // const tpc = await totalPublishedFromDb();
+    // const ts = await totalStudents();
+    // const tt = await totalTeachers();
 
     const orders = await readOrders(page);
     setOrders(orders);
-
-    setData((prev) => ({
-      ...prev,
-      teachers: tt,
-      students: ts,
-      totalCourses: tc,
-      totalPublishedCourses: tpc,
-    }));
 
     setLoading(false);
   };
@@ -121,7 +144,7 @@ const Admin = () => {
                 <div className="md:col-span-2 pt-5 xl:col-span-3">
                   <h3 className="text-xl font-semibold">Chart Data</h3>
                   <div className="w-full">
-                    <ChartData />
+                    <ChartData b={bar} data={data} />
                   </div>
                 </div>
               </div>
