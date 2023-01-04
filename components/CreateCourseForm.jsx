@@ -22,8 +22,6 @@ const CreateCourseForm = ({
     setCategories(_categories);
   };
 
-  console.log("values -->", values);
-
   const loadTeachers = async () => {
     const _teachers = await readTeachers();
     setTeachers(_teachers);

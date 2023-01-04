@@ -271,6 +271,7 @@ const EditCourse = () => {
                     handleDrag={handleDrag}
                     lesson={item}
                     index={i}
+                    slug={slug}
                   />
                 ))}
               </ul>

@@ -1,4 +1,6 @@
+import axios from "axios";
 import React from "react";
+import { toast } from "react-hot-toast";
 import Avatar from "./util/Avatar";
 
 const LessonListUpdate = ({
@@ -9,7 +11,46 @@ const LessonListUpdate = ({
   handleDrop,
   setCurrent,
   setVisible,
+  slug,
 }) => {
+  async function publishLesson(id) {
+    console.log(id);
+
+    let answer = window.confirm(
+      "Are you sure? the lesson will  be avalible for viewing?"
+    );
+    if (!answer) return;
+
+    try {
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/publish/${slug}/lesson/${id}`,
+        lesson
+      );
+      toast.success("lesson published");
+    } catch (error) {
+      toast.error("error publishing");
+      console.log(error);
+    }
+  }
+
+  async function unPublishLesson(id) {
+    let answer = window.confirm(
+      "Are you sure? the lesson will not be avalible for viewing?"
+    );
+    if (!answer) return;
+
+    try {
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/un-publish/${slug}/lesson/${id}`,
+        lesson
+      );
+      toast.success("lesson un-published");
+    } catch (error) {
+      toast.error("error un-publishing");
+      console.log(error);
+    }
+  }
+  console.log(lesson);
   return (
     <li
       draggable
@@ -27,12 +68,29 @@ const LessonListUpdate = ({
         <Avatar index={index} />
         <span>{lesson.title}</span>
       </div>
-      <button
-        className="text-sm text-red-500 cursor-pointer"
-        onClick={(e) => handleRemoveLesson(index)}
-      >
-        Delete
-      </button>
+      <div className="flex items-center space-x-4">
+        {lesson.published ? (
+          <button
+            className="text-sm text-yellow-500 cursor-pointer hover:scale-110 "
+            onClick={() => unPublishLesson(lesson._id)}
+          >
+            UnPublish
+          </button>
+        ) : (
+          <button
+            className="text-sm text-green-500 cursor-pointer hover:scale-110 "
+            onClick={() => publishLesson(lesson._id)}
+          >
+            Publish
+          </button>
+        )}
+        <button
+          className="text-sm text-red-500 cursor-pointer hover:scale-110"
+          onClick={(e) => handleRemoveLesson(index)}
+        >
+          Delete
+        </button>
+      </div>
     </li>
   );
 };
