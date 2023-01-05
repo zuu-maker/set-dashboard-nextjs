@@ -33,7 +33,7 @@ const payment = () => {
   const getInfo = async (_id) => {
     try {
       const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/get-info/${_id}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/payment-session/${_id}`
       );
       console.log("data --", data);
       setInfo(data);
@@ -123,7 +123,7 @@ const payment = () => {
         if (data === "ok") {
           setChecked(true);
           await axios.delete(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/delete-info/${id}`
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/payment-session/${id}`
           );
         }
       } else {

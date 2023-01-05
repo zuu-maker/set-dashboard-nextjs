@@ -26,7 +26,7 @@ const Home = () => {
   const handlePush = async (courseId) => {
     try {
       const { data } = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/create-info`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/payment-session`,
         {
           userId: user.id,
           courseId: courseId,

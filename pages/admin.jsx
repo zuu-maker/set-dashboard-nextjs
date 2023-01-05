@@ -47,16 +47,14 @@ const Admin = () => {
   const loadData = async () => {
     axios
       .all([
-        axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/total-students`),
-        axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/total-teachers`),
+        axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/students-total`),
+        axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/teachers-total`),
         axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/total-courses`),
         axios.get(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/total-published-courses`
         ),
-        axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/get-by-month`),
-        axios.get(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/subscription-chart-data`
-        ),
+        axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/read/bar-chat-data`),
+        axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/read/pie-chart-data`),
       ])
       .then(
         axios.spread((res1, res2, res3, res4, res5, res6) => {

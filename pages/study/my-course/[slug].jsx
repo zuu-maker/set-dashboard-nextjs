@@ -3,7 +3,7 @@ import React from "react";
 import Head from "next/head";
 import AdminNav from "../../../components/AdminNav";
 import { useEffect, useState } from "react";
-import { readMyCourse } from "../../../lib/course";
+import { readEnrolledCourse } from "../../../lib/course";
 import LessonListStudent from "../../../components/LessonListStudent";
 import ReactPlayer from "react-player";
 import { useSelector } from "react-redux";
@@ -18,7 +18,7 @@ const MyCourse = () => {
   const [current, setCurrent] = useState(null);
 
   const loadCourse = async () => {
-    const data = await readMyCourse(slug, user.id);
+    const data = await readEnrolledCourse(slug, user.id);
     if (data.ok) {
       setCurrent(data.course?.lessons[0]);
       setCourse(data.course);

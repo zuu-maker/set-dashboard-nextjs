@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import AdminNav from "../../components/AdminNav";
 import Sidebar from "../../components/Sidebar";
 import { useSelector } from "react-redux";
-import { readMyCourses } from "../../lib/teacher";
+import { readAssignedCourses } from "../../lib/teacher";
 import Loader from "../../components/util/Loader";
 import TeacherCourse from "../../components/TeacherCourse";
 import TeacherRoute from "../../components/routes/TeacherRoute";
@@ -21,7 +21,7 @@ const CourseViewTeacher = () => {
 
   const loadMyCourses = async () => {
     if (teacherId) {
-      const _courses = await readMyCourses(teacherId);
+      const _courses = await readAssignedCourses(teacherId);
       setMyCourses(_courses);
       setLoading(false);
     } else {
