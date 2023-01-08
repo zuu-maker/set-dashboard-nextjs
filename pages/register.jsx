@@ -55,11 +55,15 @@ const register = () => {
 
     if (!validator.validate(email)) {
       setError("Invalid email Format");
+      setLoading(false);
+      setDisable(false);
       return;
     }
 
     if (!email || !password || !name || !city || !phone) {
       setError("Please fill in every field");
+      setLoading(false);
+      setDisable(false);
       return;
     }
 
