@@ -17,12 +17,19 @@ import { toast } from "react-hot-toast";
 const Login = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const { user } = useSelector((state) => state);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [disable, setDisable] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (user && user.id) {
+      router.push("/");
+    }
+  }, [user]);
 
   const getCurrentUser = async (token, _email) => {
     console.log(_email);

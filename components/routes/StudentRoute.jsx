@@ -9,19 +9,20 @@ const StudentRoute = ({ children }) => {
   const user = useSelector((state) => state.user);
 
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user && user.role === "Student") {
       setShow(true);
+      setLoading(false);
     } else if (user && user.role === "Admin") {
       router.push("/admin");
-      setShow(true);
     } else if (user && user.role === "Teacher") {
       router.push(`/courses/${user.id}`);
     }
   }, [user]);
 
-  return <>{show ? children : <LoginMessage />}</>;
+  return <>{show ? !loading && children : !loading && <LoginMessage />}</>;
 };
 
 export default StudentRoute;
