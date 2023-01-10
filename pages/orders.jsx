@@ -9,6 +9,7 @@ import OrderItem from "../components/OrderItem";
 import axios from "axios";
 import ModalLoader from "../components/util/ModalLoader";
 import FlipMove from "react-flip-move";
+import Loader from "../components/util/Loader";
 
 const orders = () => {
   const { user } = useSelector((state) => state);
@@ -97,27 +98,32 @@ const orders = () => {
       <div>
         <AdminNav />
         <div className="flex justify-center">
-          <div className=" p-3 sm:p-8">
-            {orders && orders.length > 0 ? (
-              <h2 className="text-2xl mb-8 font-semibold">My Orders</h2>
-            ) : (
-              <h2 className="text-2xl mb-8 font-semibold">My Orders</h2>
-            )}
-            {/* {orders && orders.length > 0 && ( */}
-            <div style={{ postion: "relative" }}>
-              <FlipMove className="flip-wrapper" style={{ color: "red" }}>
-                {orders?.map((order) => (
-                  <OrderItem
-                    key={order?._id}
-                    verify={verifyPayment}
-                    order={order}
-                  />
-                ))}
-              </FlipMove>
+          {loading ? (
+            <div className="basis-5/6 -ml-10 p-8">
+              <Loader />
             </div>
-            {/* )} */}
-            <p className="text-red-400 text-sm">{error}</p>
-          </div>
+          ) : (
+            <div className=" p-3 sm:p-8">
+              {orders && orders.length > 0 ? (
+                <h2 className="text-2xl mb-8 font-semibold">My Orders</h2>
+              ) : (
+                <h2 className="text-2xl mb-8 font-semibold">My Orders</h2>
+              )}
+              <div style={{ postion: "relative" }}>
+                <FlipMove className="flip-wrapper" style={{ color: "red" }}>
+                  {orders?.map((order) => (
+                    <OrderItem
+                      key={order?._id}
+                      verify={verifyPayment}
+                      order={order}
+                    />
+                  ))}
+                </FlipMove>
+              </div>
+              {/* )} */}
+              <p className="text-red-400 text-sm">{error}</p>
+            </div>
+          )}
         </div>
       </div>
       {loader && <ModalLoader />}

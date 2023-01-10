@@ -30,6 +30,7 @@ const StudentView = () => {
   useEffect(() => {
     loadStudents();
   }, []);
+
   return (
     <AdminRoute className="">
       <Head>

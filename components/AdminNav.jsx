@@ -75,6 +75,15 @@ const AdminNav = () => {
                   </a>
                 </li>
               </Link>
+              {user === null && (
+                <Link href="/login">
+                  <li>
+                    <a href="#" className=" text-gray-900 hover:underline">
+                      Back to Login
+                    </a>
+                  </li>
+                </Link>
+              )}
 
               {user && user.id && (
                 <li onClick={handleSignOut}>

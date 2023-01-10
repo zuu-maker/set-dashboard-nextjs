@@ -9,9 +9,6 @@ import TransactionTable from "../components/table/Table";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ADMIN } from "../features/userSlice";
-import { totalCoursesFromDb, totalPublishedFromDb } from "../lib/course";
-import { totalStudents } from "../lib/student";
-import { totalTeachers } from "../lib/teacher";
 import { readOrders } from "../lib/order";
 import Loader from "../components/util/Loader";
 import AdminRoute from "../components/routes/AdminRoute";
@@ -71,11 +68,6 @@ const Admin = () => {
         })
       );
 
-    // const tc = await totalCoursesFromDb();
-    // const tpc = await totalPublishedFromDb();
-    // const ts = await totalStudents();
-    // const tt = await totalTeachers();
-
     const orders = await readOrders(page);
     setOrders(orders);
 
@@ -89,7 +81,6 @@ const Admin = () => {
   }, [user]);
 
   const loadMore = async () => {
-    // setQuan((prev) => prev + 1);
     setPage(page + 1);
     console.log(page);
     const orders = await readOrders(page);
@@ -148,8 +139,8 @@ const Admin = () => {
               </div>
 
               <div>
-                <div className="md:col-span-2 pt-5 xl:col-span-3">
-                  <h3 className="text-xl font-semibold">
+                <div className="md:col-span-2 pt-20 xl:col-span-3">
+                  <h3 className="text-xl  font-semibold">
                     15 of the recent Transactions
                   </h3>
                   <div className="w-full">

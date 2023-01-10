@@ -50,7 +50,6 @@ const Login = () => {
     setDisable(true);
     setLoading(true);
     email.toLowerCase();
-    let signedIn = true;
 
     if (!email || !password) {
       toast.error("Email and password can't be empty");

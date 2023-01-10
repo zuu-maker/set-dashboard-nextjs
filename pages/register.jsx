@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import { auth } from "../firebase";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../features/userSlice";
 import {
   sendEmailVerification,
@@ -17,6 +17,7 @@ import validator from "email-validator";
 const register = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const { user } = useSelector((state) => state);
 
   const [error, setError] = useState("");
   const [disable, setDisable] = useState(false);
@@ -31,6 +32,12 @@ const register = () => {
   });
 
   const { name, password, email, city, phone } = data;
+
+  useEffect(() => {
+    if (user && user.id) {
+      router.push("/");
+    }
+  }, [user]);
 
   const handleOnChange = (e) => {
     setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));

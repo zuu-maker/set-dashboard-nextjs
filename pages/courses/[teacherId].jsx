@@ -32,7 +32,6 @@ const CourseViewTeacher = () => {
   useEffect(() => {
     if (user && user.id) {
       setShow(user.isVerified);
-      console.log("is verified -->", user.isVerified);
       loadMyCourses();
     }
   }, [user]);
