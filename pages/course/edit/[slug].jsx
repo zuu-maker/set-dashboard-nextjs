@@ -5,7 +5,7 @@ import AdminNav from "../../../components/AdminNav";
 import Sidebar from "../../../components/Sidebar";
 import { useRouter } from "next/router";
 import CreateCourseForm from "../../../components/CreateCourseForm";
-import { readCourse } from "../../../lib/course";
+import { readCourse, updateLessons } from "../../../lib/course";
 import {
   updateCourse,
   uploadImage,
@@ -47,6 +47,7 @@ const EditCourse = () => {
   const [preview, setPreview] = useState("");
   const [buttonText, setButtonText] = useState("Upload Image");
   const [category, setCategory] = useState("");
+  const [isRearranged, setIsRearranged] = useState(false);
 
   const [visible, setVisible] = useState(false);
   const [current, setCurrent] = useState(initalState);
@@ -73,11 +74,22 @@ const EditCourse = () => {
     if (slug) loadCourse(slug);
   }, [slug]);
 
-  const handleDrag = (index) => {
-    console.log("being dragged ==> ", index);
+  const handleDrag = (e, index) => {
+    e.dataTransfer.setData("itemIndex", index);
   };
 
-  const handleDrop = (e, index) => {};
+  const handleDrop = (e, index) => {
+    const movingIndex = e.dataTransfer.getData("itemIndex");
+    const targetItemIndex = index;
+    let lessons = values.lessons;
+
+    let movingItem = lessons[movingIndex];
+    lessons.splice(movingIndex, 1);
+    lessons.splice(targetItemIndex, 0, movingItem);
+
+    setValues((prev) => ({ ...prev, lessons: [...lessons] }));
+    setIsRearranged(true);
+  };
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -218,6 +230,18 @@ const EditCourse = () => {
       });
   };
 
+  const saveRearrangement = async () => {
+    updateLessons(values.lessons, slug)
+      .then(() => {
+        toast.success("Course Update Successful");
+        setIsRearranged(false);
+      })
+      .catch(() => {
+        console.log(error);
+        toast.error("failed to update");
+      });
+  };
+
   return (
     <AdminAndTeacher>
       <Head>
@@ -275,6 +299,13 @@ const EditCourse = () => {
                   />
                 ))}
               </ul>
+              <button
+                onClick={saveRearrangement}
+                disabled={!isRearranged}
+                className="text-white w-36 disabled:opacity-70  bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-2 mr-2 mb-2"
+              >
+                Save
+              </button>
               <UpdateModal
                 values={values}
                 current={current}

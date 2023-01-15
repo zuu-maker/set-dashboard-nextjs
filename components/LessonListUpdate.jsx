@@ -14,8 +14,6 @@ const LessonListUpdate = ({
   slug,
 }) => {
   async function publishLesson(id) {
-    console.log(id);
-
     let answer = window.confirm(
       "Are you sure? the lesson will  be avalible for viewing?"
     );
@@ -50,7 +48,7 @@ const LessonListUpdate = ({
       console.log(error);
     }
   }
-  console.log(lesson);
+
   return (
     <li
       draggable
