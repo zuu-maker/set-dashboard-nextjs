@@ -36,8 +36,10 @@ const payment = () => {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/payment-session/${_id}`
       );
       console.log("data --", data);
-      setInfo(data);
-      setHidden(false);
+      if (data.courseId._id && data.userId) {
+        setInfo(data);
+        setHidden(false);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +47,6 @@ const payment = () => {
 
   useEffect(() => {
     if (id && id.length > 0) {
-      console.log(id);
       getInfo(id);
     }
   }, [id]);
@@ -258,7 +259,7 @@ const payment = () => {
             {checked ? (
               <a
                 target="_blank"
-                href={`https://secure.3gdirectpay.com/payv2.php?ID=${token}`}
+                href={`https://secure.3gdirectpay.com/pay.asp?ID=${token}`}
                 className="flex items-center justify-center w-full max-w-xs mx-auto bg-emerald-500 hover:bg-emerald-700 focus:bg-green-700 text-white rounded-lg px-3 py-3 font-semibold disabled:opacity-50"
               >
                 <div className="flex items-center space-x-1">
