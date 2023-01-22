@@ -11,13 +11,14 @@ const StudentRoute = ({ children }) => {
   const [showLogin, setLogin] = useState(false);
 
   useEffect(() => {
+    setLogin(false);
     if (user && user.role === "Student") {
       setShow(true);
     } else if (user && user.role === "Admin") {
       router.push("/admin");
     } else if (user && user.role === "Teacher") {
       router.push(`/courses/${user.id}`);
-    } else if (user === null) {
+    } else if (user == undefined) {
       setLogin(true);
     }
   }, [user]);

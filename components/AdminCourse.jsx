@@ -25,10 +25,7 @@ const AdminCourse = ({ course }) => {
           </div>
 
           <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
-            {course.price.toLocaleString("en-US", {
-              style: "currency",
-              currency: "ZMK",
-            })}
+            ZK{" " + course.price}
           </div>
         </div>
       </Link>

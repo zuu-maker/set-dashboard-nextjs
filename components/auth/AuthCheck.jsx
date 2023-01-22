@@ -43,11 +43,11 @@ const AuthCheck = ({ children }) => {
                 );
                 setLoader(false);
               })
-              .catch((err) => {
-                console.log(err);
+              .catch((error) => {
+                console.log(error);
                 setLoader(false);
 
-                alert(err);
+                alert(error);
               });
           }
         });

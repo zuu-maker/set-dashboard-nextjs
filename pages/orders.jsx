@@ -36,8 +36,6 @@ const orders = () => {
         }
       );
 
-      console.log("data -> ", data.data);
-
       let doc = parser.parseFromString(data.data, "text/xml");
       let result = doc
         .getElementsByTagName("Result")[0]
@@ -45,8 +43,6 @@ const orders = () => {
       let _error = doc
         .getElementsByTagName("ResultExplanation")[0]
         .childNodes[0].nodeValue.toString();
-
-      console.log("result ->", result);
 
       if (result === "000") {
         await axios.put(
@@ -56,7 +52,6 @@ const orders = () => {
             userId: user.id,
           }
         );
-        console.log("done");
         setLoader(false);
         setLoading(true);
         loadOrders(user.id);

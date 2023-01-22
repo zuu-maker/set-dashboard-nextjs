@@ -1512,6 +1512,11 @@ react-is@^18.0.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
+react-multi-select-component@^4.3.4:
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/react-multi-select-component/-/react-multi-select-component-4.3.4.tgz#4f4b354bfa1f0353fa9c3bccf8178c87c9780450"
+  integrity sha512-Ui/bzCbROF4WfKq3OKWyQJHmy/bd1mW7CQM+L83TfiltuVvHElhKEyPM3JzO9urIcWplBUKv+kyxqmEnd9jPcA==
+
 react-player@^2.11.0:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/react-player/-/react-player-2.11.0.tgz#9afc75314eb915238e8d6615b2891fbe7170aeaa"

@@ -17,9 +17,9 @@ function MyApp({ Component, pageProps }) {
                 className: "",
                 duration: 5000,
                 style: {
-                  background: "#2563eb",
+                  // background: "#2563eb",
                   height: 48,
-                  color: "#ffffff",
+                  color: "#6c757d",
                 },
               },
 
